@@ -1,0 +1,27 @@
+.two-items-layout{
+    display: flex;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1050px) {
+    .two-items-layout {
+      flex-direction: column;
+    }
+
+    .l-first{
+        width: 100%!important;
+    }
+
+    .l-second{
+        width: 100%!important;
+    }
+    
+  }
+
+.l-first{
+    width: 50%;
+}
+
+.l-second{
+    width: 50%;
+}

@@ -1,0 +1,13 @@
+.info-box{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+.info-box-title{
+    background-color: rgb(41, 41, 41);
+    padding: 10px 20px;
+    border-radius: 10px 10px 0 0;
+    color: white;
+}

@@ -1,0 +1,31 @@
+.part-layout{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10vh;
+    width: 80%;
+}
+
+.part-img{
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.img-part{
+    display: flex;
+    justify-content: flex-end;
+    height: auto;
+    align-items: flex-start;
+}
+
+.img-part, .children-part{
+    width: calc(20vw + 200px);
+    margin: 20px;
+}

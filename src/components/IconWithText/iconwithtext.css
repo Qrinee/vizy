@@ -1,0 +1,18 @@
+.iconwithtext{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.icon-text{
+    margin: 10px;
+}
+
+
+.icon-content{
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}

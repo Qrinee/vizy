@@ -1,0 +1,25 @@
+
+
+.overlay-image{
+    width: 100vw;
+    height: auto;
+}
+
+.overlay{
+    height: 60vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content{
+    position: absolute;
+    width: 100%;
+    height: inherit;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

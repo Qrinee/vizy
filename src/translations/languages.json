@@ -1,0 +1,42 @@
+{
+    "en": {
+        "disclaimer": "Disclaimer: immi-assist.online is a private company and NOT a part of any government or government agency.",
+        "title": "USA ESTA & VISA",
+        "subtitle": "Online application",
+        "btn_start": "Start application",
+        "btn_read_more": "Read more"
+    },
+    "de": {
+        "disclaimer": "Haftungsausschluss: immi-assist.online ist ein privates Unternehmen und KEIN Teil einer Regierung oder Regierungsbehörde.",
+        "title": "USA ESTA",
+        "start_btn": "Start application",
+        "subtitle": "Online application"
+    },
+    "fr": {
+        "disclaimer": "Avertissement : immi-assist.online est une entreprise privée et ne fait PAS partie d'un gouvernement ou d'une agence gouvernementale."
+    },
+    "es": {
+        "disclaimer": "Aviso legal: immi-assist.online es una empresa privada y NO forma parte de ningún gobierno ni agencia gubernamental."
+    },
+    "nl": {
+        "disclaimer": "Disclaimer: immi-assist.online is een privébedrijf en maakt GEEN deel uit van een regering of overheidsinstantie."
+    },
+    "ja": {
+        "disclaimer": "免責事項：immi-assist.onlineは民間企業であり、政府または政府機関の一部ではありません。"
+    },
+    "tw": {
+        "disclaimer": "免責聲明：immi-assist.online是一家私人公司，並非任何政府或政府機構的一部分。"
+    },
+    "ko": {
+        "disclaimer": "면책 조항: immi-assist.online은 사기업이며 어떤 정부 또는 정부 기관의 일부가 아닙니다."
+    },
+    "it": {
+        "disclaimer": "Dichiarazione di non responsabilità: immi-assist.online è un'azienda privata e NON fa parte di alcun governo o ente governativo."
+    },
+    "pt": {
+        "disclaimer": "Aviso legal: immi-assist.online é uma empresa privada e NÃO faz parte de nenhum governo ou agência governamental."
+    },
+    "cs": {
+        "disclaimer": "Zřeknutí se odpovědnosti: immi-assist.online je soukromá společnost a NENÍ součástí žádné vlády ani vládní agentury."
+    }
+}

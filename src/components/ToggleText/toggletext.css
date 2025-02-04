@@ -1,0 +1,34 @@
+.toggle-down {
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.5s all;
+}
+
+.toggle-container{
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.39);
+}
+
+.toggle-title{
+    font-weight: bold;
+}
+
+.expanded {
+    max-height: 200px; 
+}
+
+.toggle-layout {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    margin: 10px;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.open {
+    transform: rotate(180deg);
+}

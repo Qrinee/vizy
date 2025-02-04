@@ -1,0 +1,43 @@
+body{ 
+    margin: 0; 
+    font-family: "Inter", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    background-color: rgb(241, 241, 241);
+}
+      
+button{
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    margin: 5px;
+    cursor: pointer;
+}
+
+li{
+    margin-top: 10px;
+}
+
+h1{
+    font-size: calc(2.5vw + 20px);
+    margin: 0;
+}
+
+h3{
+    font-size: calc(1vw + 20px);
+    color: rgba(0, 0, 0, 0.829);
+}
+
+select{
+    padding: 5px 10px;
+    color: white;
+    font-size: Arial;
+    background: none;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+option{
+    color: black;
+}

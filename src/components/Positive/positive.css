@@ -1,0 +1,10 @@
+.positive{
+    display: flex;
+    width: 350px;
+    margin: 30px;
+    align-items: center;
+}
+
+.positive-content{
+    margin-left: 30px;
+}
