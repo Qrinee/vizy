@@ -3,6 +3,7 @@ import InfoBox from '../components/InfoBox/InfoBox'
 import Input from '../components/Input/Input'
 import Step from '../components/Step/Step'
 import Select from '../components/Select/Select'
+import TwoItemsLayout from '../layouts/Two-Items-Layout/TwoItemsLayout'
 
 export default function SecondStep() {
   return (
@@ -14,7 +15,16 @@ export default function SecondStep() {
     </div>
     <div className='content-layout'>
         <InfoBox title={"Travel details"}>
-            <Select label={"Number of travelers"} options={["1", "2", "3", "4"]} />
+            <TwoItemsLayout 
+                first={
+                    <Select label={"Number of travelers"} options={["1", "2", "3", "4"]} />
+                } 
+                second={
+                    <Select label={"Type of document"} options={["ESTA", "ESTA (Uregent 24h)"]} />
+                }
+            />
+
+
         </InfoBox>
         <InfoBox title={"Personal details - pax 1: Krystian Niemczyk"}>
             <Input required label={"Given name(s)"} />
@@ -23,8 +33,16 @@ export default function SecondStep() {
         </InfoBox>
         <InfoBox title={"Personal details - pax 1: Krystian Niemczyk"}/>
         <InfoBox title={"Billing information"}>
-            <Input required label={"Address"}/>
-            <Input required label={"Postal code"}/>
+            <TwoItemsLayout 
+                first={
+                    <Input required label={"Address"}/>
+                } 
+                second={
+                    <Input required label={"Postal code"}/>
+                }
+            />
+
+
             <Input required label={"City"}/>
         </InfoBox>
     </div>
