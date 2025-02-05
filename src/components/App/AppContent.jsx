@@ -17,6 +17,7 @@ import PositivesLayout from '../../layouts/Positives-Layout/PositivesLayout'
 import Positive from '../Positive/Positive'
 import IconWithText from '../IconWithText/IconWithText'
 import { Link } from 'react-router'
+import MainLayout from '../../layouts/Main-Layout/MainLayout'
 export default function AppContent() {
 
     const { t } = useLanguage()
