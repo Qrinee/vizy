@@ -1,0 +1,13 @@
+.select-date{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.select-date .input{
+    padding: 2px;
+    width: 100%;
+}
+
+.data{
+    padding: 20px;
+}

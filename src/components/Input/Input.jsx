@@ -11,10 +11,15 @@ export default function Input({ label, question, placeholder, bottomText, requir
         <div className="input-container">
           {left}
           <input type={type} placeholder={placeholder} />
-          <div className="question-container">
-            <button className="question-mark">?</button>
-            {question && <p className="question">{question}</p>}
-          </div>
+          {
+            question ? (
+            <div className="question-container">
+              <button className="question-mark">?</button>
+              {question && <p className="question">{question}</p>}
+            </div>
+            ) : null
+          }
+
         </div>
         <p>{bottomText}</p>
       </div>
