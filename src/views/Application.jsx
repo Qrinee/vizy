@@ -17,7 +17,6 @@ export default function Application() {
           ) : null
       }
       {
-        
         step == 1 ? (
           <SecondStep/>
         ) : null
