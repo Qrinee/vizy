@@ -1,7 +1,7 @@
 import React from "react";
 import "./radio.css";
 
-export default function Radio({ radio, name, value, onChange }) {
+export default function Radio({ radio, name, value, onChange, ind }) {
   return (
     <div className="cont">
       {radio &&
@@ -10,7 +10,7 @@ export default function Radio({ radio, name, value, onChange }) {
             <input
               type="radio"
               id={`radio-${index}`}
-              name={name || "radio-group"}
+              name={"radio-group" + ind}
               className="radio-input"
               value={e.option} 
               checked={value === e.option} 

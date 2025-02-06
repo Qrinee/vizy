@@ -16,6 +16,7 @@ const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
         radio={[{ option: "Yes" }, { option: "No" }]}
         onChange={(val) => handleSelectChange(`passportDetails.selectedOption`, val, index)}
         value={formData.passportDetails[index]?.selectedOption || ""}
+        ind={index}
       />
       <TwoItemsLayout
         first={
