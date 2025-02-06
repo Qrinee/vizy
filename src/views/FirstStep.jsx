@@ -30,7 +30,7 @@ export default function FirstStep() {
     setFormData((prev) => ({
       ...prev,
       countryCode: code,
-      phoneNumber: `${code} ${prev.phoneNumber.replace(prev.countryCode, '').trim()}`, // Maintain phone number format
+      phoneNumber: `${code} ${prev.phoneNumber.replace(prev.countryCode, '').trim()}`,
     }));
   };
 
@@ -66,7 +66,7 @@ export default function FirstStep() {
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
-                placeholder="795325775" // Don't include the country code here
+                placeholder="795325775" 
                 question="All information regarding your application, including payment confirmation and updates, will be sent to the email address you provided."
               />
             }
