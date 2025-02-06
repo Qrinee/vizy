@@ -8,6 +8,22 @@ import TravelDetails from '../components/TravelDetails/TravelDetails'
 export default function SecondStep() {
   const [formData, setFormData] = useState({ 
     numberOfTravelers: "",
+    personalDetails: [
+    {
+        gender: "",
+        givenName: "",
+        middleName: "",
+        surName: ""
+    }
+    ],
+    passportDetails: [
+        {
+            passportIssuingCountry: "",
+            passportNumber: "",
+            passportInssuranceDate: "",
+            passportExpirationDate: ""
+        }
+    ],
     documentType: "",
     gender: "",
     countryOfBirth: "",
@@ -24,6 +40,7 @@ export default function SecondStep() {
       ...prev,
       [key]: value,
     }));
+
 
     if (key === "numberOfTravelers") {
       const numberOfTravelers = parseInt(value - 1, 10);
@@ -47,7 +64,10 @@ export default function SecondStep() {
       ));
 
       setForms(newForms);
+      
     }
+    
+    console.log(formData)
   };
 
   return (
