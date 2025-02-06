@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MainLayout from '../layouts/Main-Layout/MainLayout';
 import Step from '../components/Step/Step';
 import InfoBox from '../components/InfoBox/InfoBox';
 import Input from '../components/Input/Input';
@@ -98,7 +97,7 @@ export default function FirstStep() {
               />
             }
           />
-        </InfoBox>
+        </InfoBox> 
 
         <InfoBox title="Declaration of the Applicant">
           <CheckBox

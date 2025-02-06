@@ -21,6 +21,7 @@ export default function SecondStep() {
     ],
     passportDetails: [
       {
+        selectedOption: 'No',
         passportIssuingCountry: "",
         passportNumber: "",
         passportInssuranceDate: "",
@@ -60,6 +61,7 @@ export default function SecondStep() {
         newFormData.passportDetails = [...prev.passportDetails];
         if (!newFormData.passportDetails[index]) {
           newFormData.passportDetails[index] = {
+            selectedOption: 'No',
             passportIssuingCountry: "",
             passportNumber: "",
             passportInssuranceDate: "",

@@ -5,7 +5,7 @@ import Select from "../Select/Select";
 import Input from "../Input/Input";
 import Radio from "../Radio/Radio";
 
-const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSelectedOption, title, index }) => {
+const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
   return (
     <InfoBox title={title}>
       <p style={{ padding: 20 }}>
@@ -14,8 +14,8 @@ const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSele
       <label style={{ padding: 20 }}>Do you have your passport on hand?</label>
       <Radio
         radio={[{ option: "Yes" }, { option: "No" }]}
-        onChange={(val) => setSelectedOption(val)}
-        value={selectedOption}
+        onChange={(val) => handleSelectChange(`passportDetails.selectedOption`, val, index)}
+        value={formData.passportDetails[index]?.selectedOption || ""}
       />
       <TwoItemsLayout
         first={
@@ -29,7 +29,7 @@ const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSele
           />
         }
         second={
-          selectedOption === "Yes" ? (
+          formData.passportDetails[index]?.selectedOption === "Yes" ? (
             <>
             <Input
               required
