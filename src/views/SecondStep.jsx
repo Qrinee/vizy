@@ -13,20 +13,137 @@ export default function SecondStep() {
     numberOfTravelers: "",
     documentType: "",
     gender: "",
+    givenNames: "",
+    middleName: "",
+    surname: "",
+    dateOfBirth: "",
     countryOfBirth: "",
     nationality: "",
     passportIssuingCountry: "",
+    passportNumber: "",
+    billingAddress: "",
+    billingPostalCode: "",
+    billingCity: "",
     billingCountry: "",
   });
 
   const [selectedOption, setSelectedOption] = useState("");
+  const [forms, setForms] = useState([]);
 
   const handleSelectChange = (key, value) => {
     setFormData((prev) => ({
       ...prev,
       [key]: value,
     }));
-    console.log(formData)
+
+    if (key === "numberOfTravelers") {
+      const numberOfTravelers = parseInt(value, 10);
+      const newForms = Array.from({ length: numberOfTravelers - 1 }, (_, index) => (
+        <React.Fragment key={index}>
+          <InfoBox title={`Personal details - pax ${index + 2}`}>
+            <Select
+              label={"Gender"}
+              options={["Male", "Female"]}
+              value={formData[`gender${index + 2}`] || ""}
+              onChange={(val) => handleSelectChange(`gender${index + 2}`, val.target.value)}
+            />
+            <ThreeItemsLayout
+              first={
+                <Input
+                  required
+                  label={"Given name(s)"}
+                  placeholder={"John"}
+                  value={formData[`givenNames${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`givenNames${index + 2}`, val.target.value)}
+                />
+              }
+              second={
+                <Input
+                  label={"Middle name (if any)"}
+                  placeholder={"Paul"}
+                  value={formData[`middleName${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`middleName${index + 2}`, val.target.value)}
+                />
+              }
+              third={
+                <Input
+                  required
+                  label={"Surname(s)"}
+                  placeholder={"Doe"}
+                  value={formData[`surname${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`surname${index + 2}`, val.target.value)}
+                />
+              }
+            />
+            <ThreeItemsLayout
+              first={
+                <SelectDate
+                  label={"Date of birth"}
+                  required
+                  value={formData[`dateOfBirth${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`dateOfBirth${index + 2}`, val.target.value)}
+                />
+              }
+              second={
+                <Select
+                  label={"Country of birth"}
+                  required
+                  options={["Poland", "China", "England"]}
+                  value={formData[`countryOfBirth${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`countryOfBirth${index + 2}`, val.target.value)}
+                />
+              }
+              third={
+                <Select
+                  label={"Nationality"}
+                  required
+                  options={["Poland", "China", "England"]}
+                  value={formData[`nationality${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`nationality${index + 2}`, val.target.value)}
+                />
+              }
+            />
+          </InfoBox>
+
+          <InfoBox title={`Passport details - pax ${index + 2}`}>
+            <p style={{ padding: 20 }}>
+              Provide details of the passport you will use to enter the country. Enter these details exactly as they appear in your passport.
+            </p>
+            <label style={{ padding: 20 }}>Do you have your passport on hand?</label>
+            <Radio
+              radio={[{ option: "Yes" }, { option: "No" }]}
+              onChange={(val) => setSelectedOption(val)}
+              value={selectedOption}
+            />
+            <TwoItemsLayout
+              first={
+                <Select
+                  label={"Passport issuing country"}
+                  question={"Indicate which country issued the passport."}
+                  required
+                  options={["Poland", "China", "England"]}
+                  value={formData[`passportIssuingCountry${index + 2}`] || ""}
+                  onChange={(val) => handleSelectChange(`passportIssuingCountry${index + 2}`, val.target.value)}
+                />
+              }
+              second={
+                selectedOption === "Yes" ? (
+                  <Input
+                    required
+                    label={"Passport number"}
+                    question={"Indicate the passport number as shown in the biographic data page."}
+                    value={formData[`passportNumber${index + 2}`] || ""}
+                    onChange={(val) => handleSelectChange(`passportNumber${index + 2}`, val.target.value)}
+                  />
+                ) : null
+              }
+            />
+          </InfoBox>
+        </React.Fragment>
+      ));
+
+      setForms(newForms);
+    }
   };
 
   return (
@@ -69,12 +186,42 @@ export default function SecondStep() {
             onChange={(val) => handleSelectChange("gender", val.target.value)}
           />
           <ThreeItemsLayout
-            first={<Input required label={"Given name(s)"} placeholder={"John"} />}
-            second={<Input label={"Middle name (if any)"} placeholder={"Paul"} />}
-            third={<Input required label={"Surname(s)"} placeholder={"Doe"} />}
+            first={
+              <Input
+                required
+                label={"Given name(s)"}
+                placeholder={"John"}
+                value={formData.givenNames}
+                onChange={(val) => handleSelectChange("givenNames", val.target.value)}
+              />
+            }
+            second={
+              <Input
+                label={"Middle name (if any)"}
+                placeholder={"Paul"}
+                value={formData.middleName}
+                onChange={(val) => handleSelectChange("middleName", val.target.value)}
+              />
+            }
+            third={
+              <Input
+                required
+                label={"Surname(s)"}
+                placeholder={"Doe"}
+                value={formData.surname}
+                onChange={(val) => handleSelectChange("surname", val.target.value)}
+              />
+            }
           />
           <ThreeItemsLayout
-            first={<SelectDate label={"Date of birth"} required />}
+            first={
+              <SelectDate
+                label={"Date of birth"}
+                required
+                value={formData.dateOfBirth}
+                onChange={(val) => handleSelectChange("dateOfBirth", val.target.value)}
+              />
+            }
             second={
               <Select
                 label={"Country of birth"}
@@ -96,12 +243,16 @@ export default function SecondStep() {
           />
         </InfoBox>
 
-        <InfoBox title={"Passport details - pax 1: Krystian Niemczyk"}>
+        <InfoBox title={`Passport details - pax Krystian Niemczyk`}>
           <p style={{ padding: 20 }}>
             Provide details of the passport you will use to enter the country. Enter these details exactly as they appear in your passport.
           </p>
           <label style={{ padding: 20 }}>Do you have your passport on hand?</label>
-          <Radio radio={[{ option: "Yes" }, { option: "No" }]} onChange={setSelectedOption} value={selectedOption} />
+          <Radio
+            radio={[{ option: "Yes" }, { option: "No" }]}
+            onChange={(val) => setSelectedOption(val)}
+            value={selectedOption}
+          />
           <TwoItemsLayout
             first={
               <Select
@@ -113,14 +264,50 @@ export default function SecondStep() {
                 onChange={(val) => handleSelectChange("passportIssuingCountry", val.target.value)}
               />
             }
-            second={selectedOption === "Yes" ? <Input required label={"Passport number"} question={"Indicate the passport number as shown in the biographic data page."} /> : null}
+            second={
+              selectedOption === "Yes" ? (
+                <Input
+                  required
+                  label={"Passport number"}
+                  question={"Indicate the passport number as shown in the biographic data page."}
+                  value={formData.passportNumber}
+                  onChange={(val) => handleSelectChange("passportNumber", val.target.value)}
+                />
+              ) : null
+            }
           />
         </InfoBox>
 
+        {forms}
+
         <InfoBox title={"Billing information"}>
-          <TwoItemsLayout first={<Input required label={"Address"} />} second={<Input required label={"Postal code"} />} />
           <TwoItemsLayout
-            first={<Input required label={"City"} />}
+            first={
+              <Input
+                required
+                label={"Address"}
+                value={formData.billingAddress}
+                onChange={(val) => handleSelectChange("billingAddress", val.target.value)}
+              />
+            }
+            second={
+              <Input
+                required
+                label={"Postal code"}
+                value={formData.billingPostalCode}
+                onChange={(val) => handleSelectChange("billingPostalCode", val.target.value)}
+              />
+            }
+          />
+          <TwoItemsLayout
+            first={
+              <Input
+                required
+                label={"City"}
+                value={formData.billingCity}
+                onChange={(val) => handleSelectChange("billingCity", val.target.value)}
+              />
+            }
             second={
               <Select
                 label={"Country"}
