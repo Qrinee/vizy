@@ -5,7 +5,7 @@ import Select from "../Select/Select";
 import Input from "../Input/Input";
 import Radio from "../Radio/Radio";
 
-const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSelectedOption, title }) => {
+const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSelectedOption, title, index }) => {
   return (
     <InfoBox title={title}>
       <p style={{ padding: 20 }}>
@@ -24,11 +24,24 @@ const PassportDetails = ({ formData, handleSelectChange, selectedOption, setSele
             question={"Indicate which country issued the passport."}
             required
             options={["Poland", "China", "England"]}
-            value={formData.passportIssuingCountry}
-            onChange={(val) => handleSelectChange("passportIssuingCountry", val.target.value)}
+            value={formData.passportDetails[index]?.passportIssuingCountry || ""}
+            onChange={(val) => handleSelectChange(`passportDetails.passportIssuingCountry`, val.target.value, index)}
           />
         }
-        second={selectedOption === "Yes" ? <Input required label={"Passport number"} question={"Indicate the passport number as shown in the biographic data page."} /> : null}
+        second={
+          selectedOption === "Yes" ? (
+            <>
+            <Input
+              required
+              label={"Passport number"}
+              question={"Indicate the passport number as shown in the biographic data page."}
+              value={formData.passportDetails[index].passportNumber && formData.passportDetails[index].passportNumber}
+              onChange={(val) => handleSelectChange(`passportDetails.passportNumber`, val.target.value, index)}
+            />
+
+            </>
+          ) : null
+        }
       />
     </InfoBox>
   );

@@ -3,71 +3,99 @@ import Step from "../components/Step/Step";
 import PassportDetails from "../components/PassportDetails/PassportDetails";
 import BillingInformation from "../components/BillingInformation/BillingInformation";
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
-import TravelDetails from '../components/TravelDetails/TravelDetails'
+import TravelDetails from "../components/TravelDetails/TravelDetails";
 
 export default function SecondStep() {
-  const [formData, setFormData] = useState({ 
-    numberOfTravelers: "",
+  const [formData, setFormData] = useState({
+    numberOfTravelers: "1",
     personalDetails: [
-    {
+      {
         gender: "",
         givenName: "",
         middleName: "",
-        surName: ""
-    }
+        surName: "",
+        dateOfBirth: "",
+        countryOfBirth: "",
+        nationality: "",
+      },
     ],
     passportDetails: [
-        {
-            passportIssuingCountry: "",
-            passportNumber: "",
-            passportInssuranceDate: "",
-            passportExpirationDate: ""
-        }
+      {
+        passportIssuingCountry: "",
+        passportNumber: "",
+        passportInssuranceDate: "",
+        passportExpirationDate: "",
+      },
     ],
     documentType: "",
-    gender: "",
-    countryOfBirth: "",
-    nationality: "",
-    passportIssuingCountry: "",
     billingCountry: "",
+    address: "",
+    postalCode: "",
+    city: "",
   });
 
   const [selectedOption, setSelectedOption] = useState("");
-  const [forms, setForms] = useState([]);
 
-  const handleSelectChange = (key, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const handleSelectChange = (key, value, index = 0) => {
+    setFormData((prev) => {
+      let newFormData = { ...prev };
 
+      if (key.startsWith("personalDetails")) {
+        const [_, field] = key.split(".");
+        newFormData.personalDetails = [...prev.personalDetails];
+        if (!newFormData.personalDetails[index]) {
+          newFormData.personalDetails[index] = {
+            gender: "",
+            givenName: "",
+            middleName: "",
+            surName: "",
+            dateOfBirth: "",
+            countryOfBirth: "",
+            nationality: "",
+          };
+        }
+        newFormData.personalDetails[index][field] = value;
+      } else if (key.startsWith("passportDetails")) {
+        const [_, field] = key.split(".");
+        newFormData.passportDetails = [...prev.passportDetails];
+        if (!newFormData.passportDetails[index]) {
+          newFormData.passportDetails[index] = {
+            passportIssuingCountry: "",
+            passportNumber: "",
+            passportInssuranceDate: "",
+            passportExpirationDate: "",
+          };
+        }
+        newFormData.passportDetails[index][field] = value;
+      } else {
+        newFormData[key] = value;
+      }
 
-    if (key === "numberOfTravelers") {
-      const numberOfTravelers = parseInt(value - 1, 10);
-      const newForms = Array.from({ length: numberOfTravelers }, (_, index) => (
-        <>
-          <PersonalDetails
-            key={`personal-${index}`}
-            formData={formData}
-            handleSelectChange={handleSelectChange}
-            title={`Personal details - pax ${index + 1}`}
-          />
-          <PassportDetails
-            key={`passport-${index}`}
-            formData={formData}
-            handleSelectChange={handleSelectChange}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            title={`Passport details - pax ${index + 1}`}
-          />
-        </>
-      ));
+      if (key === "numberOfTravelers") {
+        const numberOfTravelers = parseInt(value, 10);
+        newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
+          newFormData.personalDetails[i] || {
+            gender: "",
+            givenName: "",
+            middleName: "",
+            surName: "",
+            dateOfBirth: "",
+            countryOfBirth: "",
+            nationality: "",
+          }
+        );
+        newFormData.passportDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
+          newFormData.passportDetails[i] || {
+            passportIssuingCountry: "",
+            passportNumber: "",
+            passportInssuranceDate: "",
+            passportExpirationDate: "",
+          }
+        );
+      }
 
-      setForms(newForms);
-      
-    }
-    
-    console.log(formData)
+      return newFormData;
+    });
   };
 
   return (
@@ -78,23 +106,30 @@ export default function SecondStep() {
         <Step number={3} title="Receive Approved Visa" />
       </div>
       <div className="content-layout">
-
         <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
-        <PersonalDetails
-          formData={formData}
-          handleSelectChange={handleSelectChange}
-          title={"Personal details - pax 1: Krystian Niemczyk"}
-        />
-        <PassportDetails
-          formData={formData}
-          handleSelectChange={handleSelectChange}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          title={"Passport details - pax Krystian Niemczyk"}
-        />
-        {forms}
+        {formData.personalDetails.map((_, index) => (
+          <PersonalDetails
+            key={`personal-${index}`}
+            formData={formData}
+            handleSelectChange={handleSelectChange}
+            title={`Personal details - pax ${index + 1}`}
+            index={index}
+          />
+        ))}
+        {formData.passportDetails.map((_, index) => (
+          <PassportDetails
+            key={`passport-${index}`}
+            formData={formData}
+            handleSelectChange={handleSelectChange}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            title={`Passport details - pax ${index + 1}`}
+            index={index}
+          />
+        ))}
         <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
       </div>
+      <button onClick={() => console.log(formData)} className="primary">CLICK ME</button>
     </>
   );
 }

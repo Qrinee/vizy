@@ -1,7 +1,7 @@
 import React from 'react';
 import './input.css';
 
-export default function Input({ label, question, placeholder, bottomText, required, type, left }) {
+export default function Input({ label, question, placeholder, bottomText, required, type, left, onChange, value, name }) {
   return (
     <div className='input'>
       <div>
@@ -10,7 +10,7 @@ export default function Input({ label, question, placeholder, bottomText, requir
         </label>
         <div className="input-container">
           {left}
-          <input type={type} placeholder={placeholder} />
+          <input name={name} type={type} placeholder={placeholder} onChange={onChange} value={value} />
           {
             question ? (
             <div className="question-container">

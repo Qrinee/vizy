@@ -1,10 +1,11 @@
 import React from 'react'
 import './checkbox.css'
 
-export default function CheckBox({ label, checked, onChange }) {
+export default function CheckBox({ label, checked, onChange, name }) {
   return (
     <label className="checkbox-container">
       <input
+        name={name}
         type="checkbox"
         checked={checked}
         onChange={onChange}

@@ -1,25 +1,52 @@
-import React from 'react'
-import Select from './../Select/Select';
-import './selectdate.css'
+import React, { useEffect } from "react";
+import Select from "./../Select/Select";
+import "./selectdate.css";
 
-export default function SelectDate({label, required, bottomText, question}) {
+export default function SelectDate({
+  label,
+  required,
+  bottomText,
+  question,
+  value,
+  onChange,
+}) {
+  const dateParts = value ? value.split(".") : ["", "", ""];
+  const [day, month, year] = dateParts;
+
+  const handleChange = (newDay, newMonth, newYear) => {
+    const formattedDate = `${newDay}.${newMonth}.${newYear}`;
+    onChange(formattedDate);
+  };
+
   return (
-    <div className='data'>
-        <label>{label} {required && <span className="star">*</span>}</label>
-        <div className='select-date'>
-        <Select options={["1","2","3"]}/>
-        <Select options={["January", "Febuary", "March", "April", "May", "Jule", "July", "August", "September", "October", "November", "December"]} />
-        <Select options={["1999", "2000", "2001", "2002", "2003"]} />
-        {
-            question ? (
-            <div className="question-container">
-              <button className="question-mark">?</button>
-              {question && <p className="question">{question}</p>}
-            </div>
-            ) : null
-          }
-        </div>
-        <p>{bottomText}</p>
+    <div className="data">
+      <label>
+        {label} {required && <span className="star">*</span>}
+      </label>
+      <div className="select-date">
+        <Select
+          value={day}
+          onChange={(e) => handleChange(e.target.value, month, year)}
+          options={[...Array(31).keys()].map((i) => (i + 1).toString())}
+        />
+        <Select
+          value={month}
+          onChange={(e) => handleChange(day, e.target.value, year)}
+          options={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
+        />
+        <Select
+          value={year}
+          onChange={(e) => handleChange(day, month, e.target.value)}
+          options={[...Array(100).keys()].map((i) => (1900 + i).toString())}
+        />
+        {question && (
+          <div className="question-container">
+            <button className="question-mark">?</button>
+            <p className="question">{question}</p>
+          </div>
+        )}
+      </div>
+      <p>{bottomText}</p>
     </div>
-  )
+  );
 }
