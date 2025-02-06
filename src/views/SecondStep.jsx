@@ -21,7 +21,7 @@ export default function SecondStep() {
     ],
     passportDetails: [
       {
-        selectedOption: 'No',
+        selectedOption: '',
         passportIssuingCountry: "",
         passportNumber: "",
         passportInssuranceDate: "",
@@ -61,7 +61,7 @@ export default function SecondStep() {
         newFormData.passportDetails = [...prev.passportDetails];
         if (!newFormData.passportDetails[index]) {
           newFormData.passportDetails[index] = {
-            selectedOption: 'No',
+            selectedOption: '',
             passportIssuingCountry: "",
             passportNumber: "",
             passportInssuranceDate: "",
@@ -110,28 +110,28 @@ export default function SecondStep() {
       <div className="content-layout">
         <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
         {formData.personalDetails.map((_, index) => (
+          <div key={index}>
           <PersonalDetails
             key={`personal-${index}`}
             formData={formData}
             handleSelectChange={handleSelectChange}
-            title={`Personal details - pax ${index + 1}`}
+            title={`Personal details - pax ${formData.personalDetails[index].givenName && formData.personalDetails[index].givenName}`}
             index={index}
           />
-        ))}
-        {formData.passportDetails.map((_, index) => (
           <PassportDetails
             key={`passport-${index}`}
             formData={formData}
             handleSelectChange={handleSelectChange}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
-            title={`Passport details - pax ${index + 1}`}
+            title={`Passport details - pax ${formData.personalDetails[index].givenName && formData.personalDetails[index].givenName}`}
             index={index}
           />
+        </div>
         ))}
         <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
       </div>
-      <button onClick={() => console.log(formData)} className="primary">CLICK ME</button>
+      <button className="primary" onClick={() => console.log(formData)}>LOG DATA</button>
     </>
   );
 }

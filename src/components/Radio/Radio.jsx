@@ -9,14 +9,14 @@ export default function Radio({ radio, name, value, onChange, ind }) {
           <div className="radio-container" key={index}>
             <input
               type="radio"
-              id={`radio-${index}`}
-              name={"radio-group" + ind}
+              id={`radio-${ind}-${index}`} 
+              name={`radio-group-${ind}`}  
               className="radio-input"
-              value={e.option} 
-              checked={value === e.option} 
-              onChange={(event) => onChange(event.target.value)} 
+              value={e.option}
+              checked={value === e.option}
+              onChange={(event) => onChange(event.target.value)}
             />
-            <label htmlFor={`radio-${index}`} className="radio-label">
+            <label htmlFor={`radio-${ind}-${index}`} className="radio-label">
               {e.option}
             </label>
           </div>

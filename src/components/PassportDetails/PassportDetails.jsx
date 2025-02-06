@@ -4,6 +4,7 @@ import TwoItemsLayout from "../../layouts/Two-Items-Layout/TwoItemsLayout";
 import Select from "../Select/Select";
 import Input from "../Input/Input";
 import Radio from "../Radio/Radio";
+import SelectDate from "../SelectDate/SelectDate";
 
 const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
   return (
@@ -39,11 +40,36 @@ const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
               value={formData.passportDetails[index].passportNumber && formData.passportDetails[index].passportNumber}
               onChange={(val) => handleSelectChange(`passportDetails.passportNumber`, val.target.value, index)}
             />
-
             </>
           ) : null
         }
       />
+      {
+        formData.passportDetails[index]?.selectedOption === "Yes" ? (
+            <>
+              <TwoItemsLayout
+                first={
+                  <SelectDate
+                  label={"Passport issuance date"}
+                  required
+                  value={formData.passportDetails[index].passportInssuranceDate && formData.personalDetails[index].passportInssuranceDate}
+                  onChange={(val) => handleSelectChange(`passportDetails.passportInssuranceDate`, val, index)}       
+                  />
+                }
+                second={
+                  <SelectDate
+                  label={"Passport expiration date"}
+                  required
+                  value={formData.passportDetails[index].passportExpirationDate && formData.personalDetails[index].passportExpirationDate}
+                  onChange={(val) => handleSelectChange(`passportDetails.passportExpirationDate`, val, index)}
+                  />
+                }
+              
+              />
+            
+            </>
+        ) : null
+      }
     </InfoBox>
   );
 };
