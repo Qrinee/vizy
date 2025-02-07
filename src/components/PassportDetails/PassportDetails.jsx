@@ -52,7 +52,7 @@ const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
                   <SelectDate
                   label={"Passport issuance date"}
                   required
-                  value={formData.passportDetails[index].passportInssuranceDate && formData.personalDetails[index].passportInssuranceDate}
+                  value={formData.passportDetails[index]?.passportInssuranceDate || ""}
                   onChange={(val) => handleSelectChange(`passportDetails.passportInssuranceDate`, val, index)}       
                   />
                 }
@@ -60,7 +60,7 @@ const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
                   <SelectDate
                   label={"Passport expiration date"}
                   required
-                  value={formData.passportDetails[index].passportExpirationDate && formData.personalDetails[index].passportExpirationDate}
+                  value={formData.passportDetails[index]?.passportExpirationDate || ""}
                   onChange={(val) => handleSelectChange(`passportDetails.passportExpirationDate`, val, index)}
                   />
                 }
