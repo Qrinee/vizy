@@ -13,7 +13,9 @@ const TravelDetails = ({ formData, handleSelectChange }) => {
             label={"Number of travelers"}
             options={["1", "2", "3", "4"]}
             value={formData.numberOfTravelers}
-            onChange={(val) => handleSelectChange("numberOfTravelers", val.target.value)}
+            onChange={(val) => {
+              handleSelectChange("numberOfTravelers", val.target.value)
+            }}
           />
         }
         second={

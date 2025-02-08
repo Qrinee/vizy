@@ -10,6 +10,14 @@
     align-items: center;
 }
 
+.error{
+    color: red;
+    padding: 20px;
+    margin: 0;
+    padding-top: 0;
+}
+
+
 .content-layout{
     width: calc(100px + 50vw);
     margin: auto;

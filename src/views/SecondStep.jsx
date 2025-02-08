@@ -5,35 +5,7 @@ import BillingInformation from "../components/BillingInformation/BillingInformat
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import TravelDetails from "../components/TravelDetails/TravelDetails";
 
-export default function SecondStep() {
-  const [formData, setFormData] = useState({
-    numberOfTravelers: "1",
-    personalDetails: [
-      {
-        gender: "",
-        givenName: "",
-        middleName: "",
-        surName: "",
-        dateOfBirth: "",
-        countryOfBirth: "",
-        nationality: "",
-      },
-    ],
-    passportDetails: [
-      {
-        selectedOption: '',
-        passportIssuingCountry: "",
-        passportNumber: "",
-        passportInssuranceDate: "",
-        passportExpirationDate: "",
-      },
-    ],
-    documentType: "",
-    billingCountry: "",
-    address: "",
-    postalCode: "",
-    city: "",
-  });
+export default function SecondStep({formData, setFormData, setStep}) {
 
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -44,34 +16,15 @@ export default function SecondStep() {
       if (key.startsWith("personalDetails")) {
         const [_, field] = key.split(".");
         newFormData.personalDetails = [...prev.personalDetails];
-        if (!newFormData.personalDetails[index]) {
-          newFormData.personalDetails[index] = {
-            gender: "",
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-            countryOfBirth: "",
-            nationality: "",
-          };
-        }
         newFormData.personalDetails[index][field] = value;
       } else if (key.startsWith("passportDetails")) {
         const [_, field] = key.split(".");
         newFormData.passportDetails = [...prev.passportDetails];
-        if (!newFormData.passportDetails[index]) {
-          newFormData.passportDetails[index] = {
-            selectedOption: '',
-            passportIssuingCountry: "",
-            passportNumber: "",
-            passportInssuranceDate: "",
-            passportExpirationDate: "",
-          };
-        }
         newFormData.passportDetails[index][field] = value;
       } else {
         newFormData[key] = value;
       }
+
 
       if (key === "numberOfTravelers") {
         const numberOfTravelers = parseInt(value, 10);
@@ -96,6 +49,7 @@ export default function SecondStep() {
         );
       }
 
+
       return newFormData;
     });
   };
@@ -109,6 +63,10 @@ export default function SecondStep() {
       </div>
       <div className="content-layout">
         <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
+
+
+
+        
         {formData.personalDetails.map((_, index) => (
           <div key={index}>
           <PersonalDetails
@@ -130,8 +88,8 @@ export default function SecondStep() {
         </div>
         ))}
         <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
+        <button onClick={() => setStep(2)}>Continue to Summary</button>
       </div>
-      <button className="primary" onClick={() => console.log(formData)}>LOG DATA</button>
     </>
   );
 }
