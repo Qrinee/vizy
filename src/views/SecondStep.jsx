@@ -62,11 +62,7 @@ export default function SecondStep({formData, setFormData, setStep}) {
         <Step number={3} title="Receive Approved Visa" />
       </div>
       <div className="content-layout">
-        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
-
-
-
-        
+        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />      
         {formData.personalDetails.map((_, index) => (
           <div key={index}>
           <PersonalDetails
