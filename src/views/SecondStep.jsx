@@ -16,9 +16,8 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     setError(null);
   
     try {
-      const response = await fetch("https://back-black-six.vercel.app/api/application", {
+      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
