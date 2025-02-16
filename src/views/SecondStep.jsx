@@ -4,10 +4,43 @@ import PassportDetails from "../components/PassportDetails/PassportDetails";
 import BillingInformation from "../components/BillingInformation/BillingInformation";
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import TravelDetails from "../components/TravelDetails/TravelDetails";
+import { loadStripe } from "@stripe/stripe-js";
 
-export default function SecondStep({formData, setFormData, setStep}) {
-
+export default function SecondStep({ formData, setFormData, setStep }) {
   const [selectedOption, setSelectedOption] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleContinue = async () => {
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit application");
+      }
+  
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Stripe session URL not received.");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSelectChange = (key, value, index = 0) => {
     setFormData((prev) => {
@@ -24,7 +57,6 @@ export default function SecondStep({formData, setFormData, setStep}) {
       } else {
         newFormData[key] = value;
       }
-
 
       if (key === "numberOfTravelers") {
         const numberOfTravelers = parseInt(value, 10);
@@ -49,7 +81,6 @@ export default function SecondStep({formData, setFormData, setStep}) {
         );
       }
 
-
       return newFormData;
     });
   };
@@ -62,29 +93,35 @@ export default function SecondStep({formData, setFormData, setStep}) {
         <Step number={3} title="Receive Approved Visa" />
       </div>
       <div className="content-layout">
-        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />      
+        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
         {formData.personalDetails.map((_, index) => (
           <div key={index}>
-          <PersonalDetails
-            key={`personal-${index}`}
-            formData={formData}
-            handleSelectChange={handleSelectChange}
-            title={`Personal details - pax ${formData.personalDetails[index].givenName && formData.personalDetails[index].givenName}`}
-            index={index}
-          />
-          <PassportDetails
-            key={`passport-${index}`}
-            formData={formData}
-            handleSelectChange={handleSelectChange}
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            title={`Passport details - pax ${formData.personalDetails[index].givenName && formData.personalDetails[index].givenName}`}
-            index={index}
-          />
-        </div>
+            <PersonalDetails
+              key={`personal-${index}`}
+              formData={formData}
+              handleSelectChange={handleSelectChange}
+              title={`Personal details - pax ${formData.personalDetails[index].givenName || ''}`}
+              index={index}
+            />
+            <PassportDetails
+              key={`passport-${index}`}
+              formData={formData}
+              handleSelectChange={handleSelectChange}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              title={`Passport details - pax ${formData.personalDetails[index].givenName || ''}`}
+              index={index}
+            />
+          </div>
         ))}
         <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
-        <button onClick={() => setStep(2)}>Continue to Summary</button>
+        
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {loading && <p>Submitting application...</p>}
+
+        <button onClick={handleContinue} disabled={loading} className="primary">
+          {loading ? "Submitting..." : "Continue to Payment"}
+        </button>
       </div>
     </>
   );

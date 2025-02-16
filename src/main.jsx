@@ -7,15 +7,21 @@ import App from './App.jsx'
 import PageNotFound from './views/PageNotFound.jsx';
 import { LanguageProvider } from './context/LanguageContext.jsx';
 import Application from './views/Application.jsx';
+import { ApiProvider } from './context/ApiContext.jsx';
+
 
 createRoot(document.getElementById('root')).render(
-  <LanguageProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App/>} />
-          <Route path="/application" element={<Application/>} />
-          <Route path="*" element={<PageNotFound />}/>
-        </Routes>
-      </BrowserRouter>
-  </LanguageProvider>,
+
+  <ApiProvider>
+    <LanguageProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App/>} />
+            <Route path="/application" element={<Application/>} />
+            <Route path="*" element={<PageNotFound />}/>
+          </Routes>
+        </BrowserRouter>
+    </LanguageProvider>
+  </ApiProvider>
+  ,
 )
