@@ -20,8 +20,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        }
       });
   
       const data = await response.json();
