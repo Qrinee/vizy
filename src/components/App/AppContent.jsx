@@ -28,7 +28,7 @@ export default function AppContent() {
             <Overlay img={usa} bg={'rgba(0, 0, 0, 0.53)'}>
                 <h1>{t.title}</h1>
                 <h2>{t.subtitle}</h2>
-                <div>
+                <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
                     <Link to={'/application'}>
                         <button className='primary'>{t.btn_start}</button>
                     </Link>

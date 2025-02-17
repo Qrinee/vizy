@@ -28,8 +28,20 @@
         width: 90%!important;
         margin: auto;
     }
+    .iconwithtext{
+        width: 100%!important;
+    }
+    .logo{
+        display: none;
+    }
 
+    .disclaimer{
+        font-size: 10px;
+    }
 
+    .positive{
+        width: 100%!important;
+    }
   }
 
 
@@ -45,6 +57,7 @@
 .section-icon-with-text{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     width: 90%;
     align-items: center;
     background-color: rgba(128, 128, 128, 0.144);

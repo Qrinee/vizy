@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header>
       <div className='header-conent'>
-        <div>
+        <div className='logo'>
           <Link to={'/'}>
             <img src={logo} alt='logo' />
           </Link>

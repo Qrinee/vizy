@@ -1,6 +1,7 @@
 import React from 'react'
 import './positiveslayout.css'
 import { useLanguage } from '../../context/LanguageContext'
+import { Link } from 'react-router'
 
 export default function PositivesLayout({title, children}) {
     const { t } = useLanguage()
@@ -10,7 +11,9 @@ export default function PositivesLayout({title, children}) {
     <div className='positives-holder'>
         {children}
     </div>
-    <button className='primary'>{t.btn_start}</button>
+      <Link to={'/application'}>
+        <button className='primary'>{t.btn_start}</button>
+      </Link>
     </div>
   )
 }
