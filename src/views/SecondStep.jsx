@@ -18,9 +18,6 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     try {
       const response = await fetch("https://backend-2plk.onrender.com/api/application", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        }
       });
   
       const data = await response.json();

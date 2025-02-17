@@ -8,6 +8,7 @@ import PageNotFound from './views/PageNotFound.jsx';
 import { LanguageProvider } from './context/LanguageContext.jsx';
 import Application from './views/Application.jsx';
 import { ApiProvider } from './context/ApiContext.jsx';
+import Success from './views/Success.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/" element={<App/>} />
             <Route path="/application" element={<Application/>} />
             <Route path="*" element={<PageNotFound />}/>
+            <Route path='/success' element={<Success />} />
           </Routes>
         </BrowserRouter>
     </LanguageProvider>
