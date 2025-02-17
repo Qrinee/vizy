@@ -19,8 +19,9 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             <Route path="/" element={<App/>} />
             <Route path="/application" element={<Application/>} />
-            <Route path="*" element={<PageNotFound />}/>
             <Route path='/success' element={<Success />} />
+            <Route path="*" element={<PageNotFound />}/>
+
           </Routes>
         </BrowserRouter>
     </LanguageProvider>
