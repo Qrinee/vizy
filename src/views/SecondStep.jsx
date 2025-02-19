@@ -16,7 +16,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   
     try {
       console.log("FORM DATA ❤️❤️❤️:" + JSON.stringify(formData))
-      const response = await fetch("http://localhost:5000/api/application", {
+      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
