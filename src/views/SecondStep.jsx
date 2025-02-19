@@ -4,7 +4,6 @@ import PassportDetails from "../components/PassportDetails/PassportDetails";
 import BillingInformation from "../components/BillingInformation/BillingInformation";
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import TravelDetails from "../components/TravelDetails/TravelDetails";
-import { loadStripe } from "@stripe/stripe-js";
 
 export default function SecondStep({ formData, setFormData, setStep }) {
   const [selectedOption, setSelectedOption] = useState("");
@@ -16,8 +15,13 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     setError(null);
   
     try {
-      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
+      console.log("FORM DATA ❤️❤️❤️:" + JSON.stringify(formData))
+      const response = await fetch("http://localhost:5000/api/application", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
       });
   
       const data = await response.json();
@@ -25,9 +29,9 @@ export default function SecondStep({ formData, setFormData, setStep }) {
       if (!response.ok) {
         throw new Error(data.error || "Failed to submit application");
       }
-  
+      console.log(data)
       if (data.url) {
-        window.location.href = data.url;
+        // window.location.href = data.url;
       } else {
         throw new Error("Stripe session URL not received.");
       }

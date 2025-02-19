@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import './App.css'
 import AppContent from './components/App/AppContent'
 import MainLayout from './layouts/Main-Layout/MainLayout'
