@@ -29,9 +29,8 @@ export default function SecondStep({ formData, setFormData, setStep }) {
       if (!response.ok) {
         throw new Error(data.error || "Failed to submit application");
       }
-      console.log(data)
       if (data.url) {
-        // window.location.href = data.url;
+        window.location.href = data.url;
       } else {
         throw new Error("Stripe session URL not received.");
       }
