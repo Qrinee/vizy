@@ -9,36 +9,27 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
 
-  const handleContinue = async () => {
-    setLoading(true);
-    setError(null);
-  
-    try {
-      console.log("FORM DATA ❤️❤️❤️:" + JSON.stringify(formData))
-      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-  
-      const data = await response.json();
-  
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Stripe session URL not received.");
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  const validateFormData = () => {
+    const errors = [];
+
+    if (!formData.numberOfTravelers || formData.numberOfTravelers < 1) {
+      errors.push("At least one traveler is required.");
     }
+
+    formData.personalDetails.forEach((pax, index) => {
+      if (!pax.givenName) errors.push(`Traveler ${index + 1}: Given name is required.`);
+      if (!pax.surName) errors.push(`Traveler ${index + 1}: Surname is required.`);
+      if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
+      if (!pax.nationality) errors.push(`Traveler ${index + 1}: Nationality is required.`);
+    });
+
+    formData.passportDetails.forEach((passport, index) => {
+      if (!passport.passportIssuingCountry) errors.push(`Traveler ${index + 1}: Passport issuing country is required.`);
+    });
+
+    return errors;
   };
 
   const handleSelectChange = (key, value, index = 0) => {
@@ -84,6 +75,45 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     });
   };
 
+  const handleContinue = async () => {
+    setError(null);
+    setValidationErrors([]);
+    const errors = validateFormData();
+
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log("FORM DATA ❤️❤️❤️:", JSON.stringify(formData));
+      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit application");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Stripe session URL not received.");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="steps">
@@ -115,6 +145,13 @@ export default function SecondStep({ formData, setFormData, setStep }) {
         ))}
         <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
         
+        {validationErrors.length > 0 && (
+          <ul style={{ color: "red" }}>
+            {validationErrors.map((err, idx) => (
+              <li key={idx}>{err}</li>
+            ))}
+          </ul>
+        )}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {loading && <p>Submitting application...</p>}
 
