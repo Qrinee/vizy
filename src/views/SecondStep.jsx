@@ -9,60 +9,23 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [validationErrors, setValidationErrors] = useState([]);
-
-  const validateForm = () => {
-    const errors = [];
-    
-    if (!formData.travelDate) {
-      errors.push("Travel date is required.");
-    }
-    if (!formData.numberOfTravelers || formData.numberOfTravelers <= 0) {
-      errors.push("Number of travelers must be at least 1.");
-    }
-
-    formData.personalDetails.forEach((person, index) => {
-      if (!person.givenName) errors.push(`Given name is required for traveler ${index + 1}`);
-      if (!person.surName) errors.push(`Surname is required for traveler ${index + 1}`);
-      if (!person.dateOfBirth) errors.push(`Date of birth is required for traveler ${index + 1}`);
-      if (!person.nationality) errors.push(`Nationality is required for traveler ${index + 1}`);
-    });
-
-    formData.passportDetails.forEach((passport, index) => {
-      if (!passport.passportIssuingCountry) errors.push(`Passport issuing country is required for traveler ${index + 1}`);
-      if (!passport.passportNumber) errors.push(`Passport number is required for traveler ${index + 1}`);
-      if (!passport.passportExpirationDate) errors.push(`Passport expiration date is required for traveler ${index + 1}`);
-    });
-    
-    if (!formData.billingAddress) {
-      errors.push("Billing address is required.");
-    }
-    if (!formData.email) {
-      errors.push("Email is required.");
-    }
-    
-    setValidationErrors(errors);
-    return errors.length === 0;
-  };
 
   const handleContinue = async () => {
-    if (!validateForm()) {
-      return;
-    }
-    
     setLoading(true);
     setError(null);
+  
     try {
-      console.log("FORM DATA ❤️❤️❤️:" + JSON.stringify(formData));
+      console.log("FORM DATA ❤️❤️❤️:" + JSON.stringify(formData))
       const response = await fetch("https://backend-2plk.onrender.com/api/application", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
-
+  
       const data = await response.json();
+  
       if (!response.ok) {
         throw new Error(data.error || "Failed to submit application");
       }
@@ -78,6 +41,49 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     }
   };
 
+  const handleSelectChange = (key, value, index = 0) => {
+    setFormData((prev) => {
+      let newFormData = { ...prev };
+
+      if (key.startsWith("personalDetails")) {
+        const [_, field] = key.split(".");
+        newFormData.personalDetails = [...prev.personalDetails];
+        newFormData.personalDetails[index][field] = value;
+      } else if (key.startsWith("passportDetails")) {
+        const [_, field] = key.split(".");
+        newFormData.passportDetails = [...prev.passportDetails];
+        newFormData.passportDetails[index][field] = value;
+      } else {
+        newFormData[key] = value;
+      }
+
+      if (key === "numberOfTravelers") {
+        const numberOfTravelers = parseInt(value, 10);
+        newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
+          newFormData.personalDetails[i] || {
+            gender: "",
+            givenName: "",
+            middleName: "",
+            surName: "",
+            dateOfBirth: "",
+            countryOfBirth: "",
+            nationality: "",
+          }
+        );
+        newFormData.passportDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
+          newFormData.passportDetails[i] || {
+            passportIssuingCountry: "",
+            passportNumber: "",
+            passportInssuranceDate: "",
+            passportExpirationDate: "",
+          }
+        );
+      }
+
+      return newFormData;
+    });
+  };
+
   return (
     <>
       <div className="steps">
@@ -86,20 +92,20 @@ export default function SecondStep({ formData, setFormData, setStep }) {
         <Step number={3} title="Receive Approved Visa" />
       </div>
       <div className="content-layout">
-        <TravelDetails formData={formData} handleSelectChange={() => {}} />
+        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
         {formData.personalDetails.map((_, index) => (
           <div key={index}>
             <PersonalDetails
               key={`personal-${index}`}
               formData={formData}
-              handleSelectChange={() => {}}
+              handleSelectChange={handleSelectChange}
               title={`Personal details - pax ${formData.personalDetails[index].givenName || ''}`}
               index={index}
             />
             <PassportDetails
               key={`passport-${index}`}
               formData={formData}
-              handleSelectChange={() => {}}
+              handleSelectChange={handleSelectChange}
               selectedOption={selectedOption}
               setSelectedOption={setSelectedOption}
               title={`Passport details - pax ${formData.personalDetails[index].givenName || ''}`}
@@ -107,15 +113,8 @@ export default function SecondStep({ formData, setFormData, setStep }) {
             />
           </div>
         ))}
-        <BillingInformation formData={formData} handleSelectChange={() => {}} />
+        <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
         
-        {validationErrors.length > 0 && (
-          <ul style={{ color: "red" }}>
-            {validationErrors.map((err, idx) => (
-              <li key={idx}>{err}</li>
-            ))}
-          </ul>
-        )}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {loading && <p>Submitting application...</p>}
 
