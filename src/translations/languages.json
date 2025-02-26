@@ -1,6 +1,6 @@
 {
     "en": {
-        "disclaimer": "Disclaimer: immi-assist.online is a private company and NOT a part of any government or government agency.",
+        "disclaimer": "Disclaimer: govguide.co is a private company and NOT a part of any government or government agency.",
         "title": "USA ESTA & VISA",
         "subtitle": "Online application",
         "btn_start": "Start application",
@@ -36,13 +36,52 @@
         "visa_types_desc": "The most common visas and processes we help our clients with:",
         "esta_visa": "ESTA visa-waiver: simple travel authorization for selected countries",
         "b1b2_visa": "B1/B2 visitor visa: main tourist visa for all travelers to the USA",
-        "green_card": "Green card: permanent resident visa that allows a non-U.S. citizen to live and work indefinitely in the United States"
+        "green_card": "Green card: permanent resident visa that allows a non-U.S. citizen to live and work indefinitely in the United States",
+        
+        "contact_name_is_required": "Contact name is required.",
+        "phone_number_is_required": "Phone number is required.",
+        "email_address_is_required": "Email address is required.",
+        "emails_do_not_match": "Emails do not match.",
+        "must_confirm_information": "You must confirm the information.",
+        "must_accept_terms": "You must accept the terms.",
+        "confirm_email_address": "Confirm Email Address",
+        "mobile_cellphone_number": "Mobile/cellphone number",
+        "email_address": "Email Address",
+        "submit_application_online": "Submit Application Online",
+        "review_and_confirm_payment": "Review and Confirm Payment",
+        "receive_approved_visa": "Receive Approved Visa",
+        "contact_name": "Contact Name",
+        "the_contact_person_is_who_will_receive_every_update_and_communication_regarding_your_application": "The contact person is who will receive every update and communication regarding your application",
+        "indicate_the_contact_person_s_full_name": "Indicate the contact person's full name",
+        "all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided": "All information regarding your application, including payment confirmation and updates, will be sent to the email address you provided",
+        "provide_a_contact_email_address": "Provide a contact email address",
+        "i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate": "I declare that all the information I have provided is truthful, complete and accurate",
+        "i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy": "I have read and agree to the terms and conditions, the cancellation refund policy, and the privacy policy.",
+        "continue": "Continue",
+        "declaration_of_the_applicant": "Declaration of the Applicant",
+
+
+        "at_least_one_traveler_required": "At least one traveler is required.",
+        "traveler": "Traveler",
+        "given_name_required": "Given name is required.",
+        "surname_required": "Surname is required.",
+        "date_of_birth_required": "Date of birth is required.",
+        "nationality_required": "Nationality is required.",
+        "passport_issuing_country_required": "Passport issuing country is required.",
+        "failed_to_submit_application": "Failed to submit application.",
+        "stripe_session_url_not_received": "Stripe session URL not received.",
+        "personal_details": "Personal Details",
+        "passport_details": "Passport Details",
+        "error": "Error",
+        "submitting_application": "Submitting application...",
+        "submitting": "Submitting...",
+        "continue_to_payment": "Continue to Payment"
 
 
     },
     
     "de": {
-        "disclaimer": "Haftungsausschluss: immi-assist.online ist ein privates Unternehmen und KEIN Teil einer Regierung oder Regierungsbehörde.",
+        "disclaimer": "Haftungsausschluss: govguide.co ist ein privates Unternehmen und KEIN Teil einer Regierung oder Regierungsbehörde.",
         "title": "USA ESTA & VISUM",
         "subtitle": "Online-Antrag",
         "btn_start": "Antrag starten",
@@ -78,10 +117,26 @@
         "visa_types_desc": "Die häufigsten Visa und Verfahren, bei denen wir unseren Kunden helfen:",
         "esta_visa": "ESTA-Visumbefreiung: einfache Reisegenehmigung für ausgewählte Länder",
         "b1b2_visa": "B1/B2 Besuchervisum: Haupttouristenvisum für alle Reisenden in die USA",
-        "green_card": "Green Card: Dauerhaftes Aufenthaltsvisum, das einem Nicht-US-Bürger erlaubt, unbegrenzt in den Vereinigten Staaten zu leben und zu arbeiten"
+        "green_card": "Green Card: Dauerhaftes Aufenthaltsvisum, das einem Nicht-US-Bürger erlaubt, unbegrenzt in den Vereinigten Staaten zu leben und zu arbeiten",
+
+
+        "i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy": "Ich habe die Allgemeinen Geschäftsbedingungen, die Stornierungs- und Rückerstattungsrichtlinie sowie die Datenschutzrichtlinie gelesen und stimme ihnen zu.",
+        "mobile_cellphone_number": "Mobil-/Handynummer",
+        "email_address": "E-Mail-Adresse",
+        "submit_application_online": "Antrag online einreichen",
+        "review_and_confirm_payment": "Zahlung überprüfen und bestätigen",
+        "receive_approved_visa": "Genehmigtes Visum erhalten",
+        "contact_name": "Kontaktname",
+        "the_contact_person_is_who_will_receive_every_update_and_communication_regarding_your_application": "Die Kontaktperson erhält alle Aktualisierungen und Mitteilungen zu Ihrem Antrag",
+        "indicate_the_contact_person_s_full_name": "Geben Sie den vollständigen Namen der Kontaktperson an",
+        "all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided": "Alle Informationen zu Ihrem Antrag, einschließlich Zahlungsbestätigung und Aktualisierungen, werden an die von Ihnen angegebene E-Mail-Adresse gesendet",
+        "provide_a_contact_email_address": "Geben Sie eine Kontakt-E-Mail-Adresse an",
+        "i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate": "Ich erkläre, dass alle von mir angegebenen Informationen wahrheitsgemäß, vollständig und korrekt sind",
+        "continue": "Weiter",
+        "declaration_of_the_applicant": "Erklärung des Antragstellers"
     },
     "fr": {
-        "disclaimer": "Avertissement : immi-assist.online est une entreprise privée et ne fait PAS partie d’un gouvernement ou d’une agence gouvernementale.",
+        "disclaimer": "Avertissement : govguide.co est une entreprise privée et ne fait PAS partie d’un gouvernement ou d’une agence gouvernementale.",
         "title": "USA ESTA & VISA",
         "subtitle": "Demande en ligne",
         "btn_start": "Démarrer la demande",
@@ -120,7 +175,7 @@
         "green_card": "Green Card : un visa de résident permanent permettant à un non-citoyen américain de vivre et travailler indéfiniment aux États-Unis"
     },
     "es": {
-        "disclaimer": "Aviso: immi-assist.online es una empresa privada y NO forma parte de ningún gobierno ni agencia gubernamental.",
+        "disclaimer": "Aviso: govguide.co es una empresa privada y NO forma parte de ningún gobierno ni agencia gubernamental.",
         "title": "USA ESTA & VISA",
         "subtitle": "Solicitud en línea",
         "btn_start": "Iniciar solicitud",
@@ -159,7 +214,7 @@
         "green_card": "Green Card: visa de residencia permanente que permite a un ciudadano no estadounidense vivir y trabajar indefinidamente en los Estados Unidos"
     },
     "nl": {
-        "disclaimer": "Disclaimer: immi-assist.online is een privébedrijf en GEEN onderdeel van een regering of overheidsinstantie.",
+        "disclaimer": "Disclaimer: govguide.co is een privébedrijf en GEEN onderdeel van een regering of overheidsinstantie.",
         "title": "USA ESTA & VISUM",
         "subtitle": "Online aanvraag",
         "btn_start": "Aanvraag starten",
@@ -198,7 +253,7 @@
         "green_card": "Green Card: een permanente verblijfsvergunning waarmee een niet-Amerikaan onbeperkt in de Verenigde Staten kan wonen en werken"
     },
     "ja": {
-        "disclaimer": "免責事項: immi-assist.onlineは民間企業であり、政府や政府機関の一部ではありません。",
+        "disclaimer": "免責事項: govguide.coは民間企業であり、政府や政府機関の一部ではありません。",
         "title": "アメリカ ESTA & ビザ",
         "subtitle": "オンライン申請",
         "btn_start": "申請を開始",
@@ -237,7 +292,7 @@
         "green_card": "グリーンカード：アメリカに無期限で居住・就労できる永住権"
     },
     "tw": {
-        "disclaimer": "免責聲明：immi-assist.online 是一家私人公司，並非任何政府或政府機構的一部分。",
+        "disclaimer": "免責聲明：govguide.co 是一家私人公司，並非任何政府或政府機構的一部分。",
         "title": "美國 ESTA & 簽證",
         "subtitle": "線上申請",
         "btn_start": "開始申請",
@@ -276,7 +331,7 @@
         "green_card": "綠卡：允許非美國公民在美國永久居住和工作的永久居留簽證"
     },
     "ko": {
-    "disclaimer": "면책 조항: immi-assist.online은 민간 회사이며 정부 또는 정부 기관의 일부가 아닙니다.",
+    "disclaimer": "면책 조항: govguide.co은 민간 회사이며 정부 또는 정부 기관의 일부가 아닙니다.",
     "title": "미국 ESTA & 비자",
     "subtitle": "온라인 신청",
     "btn_start": "신청 시작",
@@ -315,7 +370,7 @@
     "green_card": "그린 카드: 비 미국 시민이 미국에서 무기한 거주하고 일할 수 있는 영주 비자"
 },
     "it": {
-    "disclaimer": "Esclusione di responsabilità: immi-assist.online è una compagnia privata e NON fa parte di alcun governo o agenzia governativa.",
+    "disclaimer": "Esclusione di responsabilità: govguide.co è una compagnia privata e NON fa parte di alcun governo o agenzia governativa.",
     "title": "USA ESTA & VISA",
     "subtitle": "Domanda online",
     "btn_start": "Inizia la domanda",
@@ -354,7 +409,7 @@
     "green_card": "Green Card: visto per residenti permanenti che consente a un cittadino non statunitense di vivere e lavorare indefinitamente negli Stati Uniti"
 },
     "pt": {
-    "disclaimer": "Isenção de responsabilidade: immi-assist.online é uma empresa privada e NÃO faz parte de qualquer governo ou agência governamental.",
+    "disclaimer": "Isenção de responsabilidade: govguide.co é uma empresa privada e NÃO faz parte de qualquer governo ou agência governamental.",
     "title": "USA ESTA & VISA",
     "subtitle": "Aplicação online",
     "btn_start": "Começar aplicação",
@@ -393,7 +448,7 @@
     "green_card": "Green Card: visto de residente permanente que permite a um cidadão não americano viver e trabalhar indefinidamente nos Estados Unidos"
 },
    "cs": {
-    "disclaimer": "Upozornění: immi-assist.online je soukromá společnost a NEJDE o žádnou vládní nebo vládní agenturu.",
+    "disclaimer": "Upozornění: govguide.co je soukromá společnost a NEJDE o žádnou vládní nebo vládní agenturu.",
     "title": "USA ESTA & VISA",
     "subtitle": "Online žádost",
     "btn_start": "Začít žádost",

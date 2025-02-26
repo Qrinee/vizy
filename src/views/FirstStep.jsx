@@ -5,10 +5,11 @@ import Input from '../components/Input/Input';
 import CheckBox from '../components/CheckBox/CheckBox';
 import TwoItemsLayout from '../layouts/Two-Items-Layout/TwoItemsLayout';
 import CountryCodeSelect from '../components/CountryCodeSelect/CountryCodeSelect';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function FirstStep({ formData, setFormData, setStep }) {
   const [errors, setErrors] = useState({});
-
+    const { t } = useLanguage();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -30,15 +31,16 @@ export default function FirstStep({ formData, setFormData, setStep }) {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.contactName.trim()) newErrors.contactName = "Contact name is required.";
-    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = "Phone number is required.";
-    if (!formData.emailAddress.trim()) newErrors.emailAddress = "Email address is required.";
-    if (formData.emailAddress !== formData.confirmEmail) newErrors.confirmEmail = "Emails do not match.";
-    if (!formData.trueInformation) newErrors.trueInformation = "You must confirm the information.";
-    if (!formData.acceptation) newErrors.acceptation = "You must accept the terms.";
-    
+    if (!formData.contactName.trim()) newErrors.contactName = t.contact_name_is_required;
+    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = t.phone_number_is_required;
+    if (!formData.emailAddress.trim()) newErrors.emailAddress = t.email_address_is_required;
+    if (formData.emailAddress !== formData.confirmEmail) newErrors.confirmEmail = t.emails_do_not_match;
+    if (!formData.trueInformation) newErrors.trueInformation = t.must_confirm_information;
+    if (!formData.acceptation) newErrors.acceptation = t.must_accept_terms;
+  
     return newErrors;
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,9 +56,9 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="steps">
-        <Step number={1} title="Submit Application Online" active={true} />
-        <Step number={2} title="Review and Confirm Payment" />
-        <Step number={3} title="Receive Approved Visa" />
+        <Step number={1} title={t.submit_application_online} active={true} />
+        <Step number={2} title={t.review_and_confirm_payment} />
+        <Step number={3} title={t.receive_approved_visa} />
       </div>
       <div className="content-layout">
         <InfoBox title="Contact Details">
@@ -66,13 +68,13 @@ export default function FirstStep({ formData, setFormData, setStep }) {
                 <Input
                   type="text"
                   required
-                  label="Contact Name"
+                  label={t.contact_name}
                   name="contactName"
                   value={formData.contactName}
                   onChange={handleChange}
-                  question="The contact person is who will receive every update and communication regarding your application."
+                  question={t.the_contact_person_is_who_will_receive_every_update_and_communication_regarding_your_application}
                   placeholder="John Doe"
-                  bottomText="Indicate the contact person's full name."
+                  bottomText={t.indicate_the_contact_person_s_full_name}
                 />
                 {errors.contactName && <p className="error">{errors.contactName}</p>}
               </div>
@@ -83,12 +85,12 @@ export default function FirstStep({ formData, setFormData, setStep }) {
                   type="tel"
                   left={<CountryCodeSelect onChange={handleCountryCodeChange} value={formData.countryCode} />}
                   required
-                  label="Mobile/cellphone number"
+                  label={t.mobile_cellphone_number}
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="795325775" 
-                  question="All information regarding your application, including payment confirmation and updates, will be sent to the email address you provided."
+                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
                 />
                 {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
               </div>
@@ -100,13 +102,13 @@ export default function FirstStep({ formData, setFormData, setStep }) {
                 <Input
                   type="email"
                   required
-                  label="Email Address"
+                  label={t.email_address}
                   name="emailAddress"
                   value={formData.emailAddress}
                   onChange={handleChange}
                   placeholder="email@mail.com"
-                  bottomText="Provide a contact email address."
-                  question="All information regarding your application, including payment confirmation and updates, will be sent to the email address you provided."
+                  bottomText={t.provide_a_contact_email_address}
+                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
                 />
                 {errors.emailAddress && <p className="error">{errors.emailAddress}</p>}
               </div>
@@ -116,12 +118,12 @@ export default function FirstStep({ formData, setFormData, setStep }) {
                 <Input
                   type="email"
                   required
-                  label="Confirm Email Address"
+                  label={t.confirm_email_address}
                   name="confirmEmail"
                   value={formData.confirmEmail}
                   onChange={handleChange}
                   placeholder="email@mail.com"
-                  question="All information regarding your application, including payment confirmation and updates, will be sent to the email address you provided."
+                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
                 />
                 {errors.confirmEmail && <p className="error">{errors.confirmEmail}</p>}
               </div>
@@ -129,13 +131,13 @@ export default function FirstStep({ formData, setFormData, setStep }) {
           />
         </InfoBox> 
 
-        <InfoBox title="Declaration of the Applicant">
+        <InfoBox title={t.declaration_of_the_applicant}>
           <div>
             <CheckBox
               name="trueInformation"
               onChange={handleChange}
               checked={formData.trueInformation}
-              label="I declare that all the information I have provided is truthful, complete and accurate."
+              label={t.i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate}
             />
             {errors.trueInformation && <p className="error">{errors.trueInformation}</p>}
           </div>
@@ -144,13 +146,13 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               name="acceptation"
               onChange={handleChange}
               checked={formData.acceptation}
-              label="I have read and agree to the terms and conditions, the cancellation/refund policy and privacy policy."
+              label={t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}
             />
             {errors.acceptation && <p className="error">{errors.acceptation}</p>}
           </div>
         </InfoBox>
       </div>
-      <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}>Continue</button>
+      <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}>{t.continue}</button>
     </form>
   );
 }
