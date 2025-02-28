@@ -4,12 +4,14 @@ import PassportDetails from "../components/PassportDetails/PassportDetails";
 import BillingInformation from "../components/BillingInformation/BillingInformation";
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import TravelDetails from "../components/TravelDetails/TravelDetails";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function SecondStep({ formData, setFormData, setStep }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
+  const {t} = useLanguage()
 
   const validateFormData = () => {
     const errors = [];
@@ -117,9 +119,9 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   return (
     <>
       <div className="steps">
-        <Step number={1} title="Submit Application Online" active={true} />
-        <Step number={2} title="Review and Confirm Payment" />
-        <Step number={3} title="Receive Approved Visa" />
+        <Step number={1} title={t.submit_application_online} active={true} />
+        <Step number={2} title={t.review_and_confirm_payment} />
+        <Step number={3} title={t.receive_approved_visa} />
       </div>
       <div className="content-layout">
         <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
@@ -155,8 +157,8 @@ export default function SecondStep({ formData, setFormData, setStep }) {
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {loading && <p>Submitting application...</p>}
 
-        <button onClick={handleContinue} disabled={loading} className="primary">
-          {loading ? "Submitting..." : "Continue to Payment"}
+        <button style={{margin: 'auto', display: 'block', marginTop: '20px'}} onClick={handleContinue} disabled={loading} className="primary">
+          {loading ? t.submitting : t.continue_to_payment}
         </button>
       </div>
     </>

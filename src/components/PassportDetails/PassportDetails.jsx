@@ -5,95 +5,67 @@ import Select from "../Select/Select";
 import Input from "../Input/Input";
 import Radio from "../Radio/Radio";
 import SelectDate from "../SelectDate/SelectDate";
+import { useLanguage } from "../../context/LanguageContext";
+import { countries } from "../../countries";
 
 const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
-
-  const countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", 
-    "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", 
-    "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", 
-    "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", 
-    "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", 
-    "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (Swaziland)", 
-    "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", 
-    "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", 
-    "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", 
-    "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", 
-    "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", 
-    "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", 
-    "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", 
-    "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", 
-    "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", 
-    "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", 
-    "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", 
-    "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", 
-    "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", 
-    "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-  ];
+  const { t } = useLanguage();
+  const passportData = formData.passportDetails[index] || {};
 
   return (
     <InfoBox title={title}>
       <p style={{ padding: 20 }}>
-        Provide details of the passport you will use to enter the country. Enter these details exactly as they appear in your passport.
+        {t.provide_details_of_the_passport_you_will_use_to_enter_the_country_enter_these_details_exactly_as_they_appear_in_your_passport}
       </p>
-      <label style={{ padding: 20 }}>Do you have your passport on hand?</label>
+      <label style={{ padding: 20 }}>{t.do_you_have_your_passport_on_hand}</label>
       <Radio
-        radio={[{ option: "Yes" }, { option: "No" }]}
+        radio={[{ option: t.yes }, { option: t.no }]}
         onChange={(val) => handleSelectChange(`passportDetails.selectedOption`, val, index)}
-        value={formData.passportDetails[index]?.selectedOption || ""}
-        ind={index}
+        value={passportData.selectedOption || ""}
       />
       <TwoItemsLayout
         first={
           <Select
-            label={"Passport issuing country"}
-            question={"Indicate which country issued the passport."}
+            label={t.passport_issuing_country}
+            question={t.indicate_which_country_issued_the_passport}
             required
             options={countries}
-            value={formData.passportDetails[index]?.passportIssuingCountry || ""}
+            value={passportData.passportIssuingCountry || ""}
             onChange={(val) => handleSelectChange(`passportDetails.passportIssuingCountry`, val.target.value, index)}
           />
         }
         second={
-          formData.passportDetails[index]?.selectedOption === "Yes" ? (
-            <>
+          passportData.selectedOption === t.yes && (
             <Input
               required
-              label={"Passport number"}
-              question={"Indicate the passport number as shown in the biographic data page."}
-              value={formData.passportDetails[index].passportNumber && formData.passportDetails[index].passportNumber}
+              label={t.passport_number}
+              question={t.indicate_the_passport_number_as_shown_in_the_biographic_data_page}
+              value={passportData.passportNumber || ""}
               onChange={(val) => handleSelectChange(`passportDetails.passportNumber`, val.target.value, index)}
             />
-            </>
-          ) : null
+          )
         }
       />
-      {
-        formData.passportDetails[index]?.selectedOption === "Yes" ? (
-            <>
-              <TwoItemsLayout
-                first={
-                  <SelectDate
-                  label={"Passport issuance date"}
-                  required
-                  value={formData.passportDetails[index]?.passportInssuranceDate || ""}
-                  onChange={(val) => handleSelectChange(`passportDetails.passportInssuranceDate`, val, index)}       
-                  />
-                }
-                second={
-                  <SelectDate
-                  label={"Passport expiration date"}
-                  required
-                  value={formData.passportDetails[index]?.passportExpirationDate || ""}
-                  onChange={(val) => handleSelectChange(`passportDetails.passportExpirationDate`, val, index)}
-                  />
-                }
-              
-              />
-            
-            </>
-        ) : null
-      }
+      {passportData.selectedOption === t.yes && (
+        <TwoItemsLayout
+          first={
+            <SelectDate
+              label={t.passport_issuance_date}
+              required
+              value={passportData.passportIssuanceDate || ""}
+              onChange={(val) => handleSelectChange(`passportDetails.passportIssuanceDate`, val, index)}
+            />
+          }
+          second={
+            <SelectDate
+              label={t.passport_expiration_date}
+              required
+              value={passportData.passportExpirationDate || ""}
+              onChange={(val) => handleSelectChange(`passportDetails.passportExpirationDate`, val, index)}
+            />
+          }
+        />
+      )}
     </InfoBox>
   );
 };
