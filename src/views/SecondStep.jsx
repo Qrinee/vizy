@@ -90,7 +90,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     setLoading(true);
     try {
       console.log("FORM DATA ❤️❤️❤️:", JSON.stringify(formData));
-      const response = await fetch("https://backend-2plk.onrender.com/api/application", {
+      const response = await fetch("https://api.govguide.co/api/application", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
