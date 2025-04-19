@@ -32,7 +32,6 @@ export default function AppContent() {
                     <Link to={'/application'}>
                         <button className='primary'>{t.btn_start}</button>
                     </Link>
-                    <button className='secondary'>{t.btn_read_more}</button>
                 </div>
             </Overlay>
             
