@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '../layouts/Main-Layout/MainLayout';
 import './Success.css';  
 import { Link } from 'react-router';
 
 export default function Success() {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-357796121/PTQSCIPgnL0CEJmSzqoB',
+        transaction_id: '123', 
+      });
+    }
+  }, []);
   return (
     <MainLayout>
       <div className="success-container">

@@ -146,7 +146,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               name="acceptation"
               onChange={handleChange}
               checked={formData.acceptation}
-              label={t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}
+              label={<a href=''></a> + t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}
             />
             {errors.acceptation && <p className="error">{errors.acceptation}</p>}
           </div>
