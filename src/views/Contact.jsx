@@ -4,6 +4,7 @@ import CountryCodeSelect from '../components/CountryCodeSelect/CountryCodeSelect
 import InfoBox from '../components/InfoBox/InfoBox';
 import { useLanguage } from '../context/LanguageContext';
 import Header from '../components/Header/Header';
+import { Link } from 'react-router';
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -63,8 +64,9 @@ export default function Contact() {
     <Header/>
     <form onSubmit={handleSubmit} style={{ maxWidth: 800, margin: '0 auto' }}>
       <h2 style={{textAlign: 'center', fontSize: '50px'}}>{t?.contact_us || 'Contact Us'}</h2>
+      <Link to={'/'} style={{textAlign: 'center', display: 'block', margin: 'auto'}}>Back to HomePage</Link>
       {submitted ? (
-        <p style={{ color: 'green' }}>{t?.form_submitted_thank_you || 'Thank you for your message!'}</p>
+        <p style={{ color: 'green', fontSize: 30, textAlign: 'center', fontWeight: 'bold' }}>{t?.form_submitted_thank_you || 'Thank you for your message!'}</p>
       ) : (
         <InfoBox title={t?.contact_form || 'Contact Form'}>
           <div style={{ marginBottom: '1rem' }}>
@@ -116,7 +118,7 @@ export default function Contact() {
             {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
           </div>
 
-          <div style={{ marginBottom: '1rem' }}>
+          <div style={{  margin: 20, marginBottom: '1rem'  }}>
             <label>{t?.message || 'Message'}</label>
             <textarea
               name="message"
@@ -124,7 +126,7 @@ export default function Contact() {
               onChange={handleChange}
               placeholder="Write your message here..."
               rows={5}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: 8, borderColor: '#ccc' }}
+              style={{ width: '100%', fontFamily: 'Arial', padding: '0.5rem', borderRadius: 8, borderColor: '#ccc' }}
             />
             {errors.message && <p className="error">{errors.message}</p>}
           </div>
