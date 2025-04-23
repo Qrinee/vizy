@@ -2,4 +2,5 @@
     color: black!important;
     width: 100%;
     padding: 10px 12px;
+    outline: 2px solid rgba(228, 228, 228, 0.555);
 }

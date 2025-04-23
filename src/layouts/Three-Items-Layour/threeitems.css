@@ -5,3 +5,9 @@
 .three-items-layout{
     display: flex;
 }
+
+@media only screen and (max-width: 600px) {
+    .three-items-layout{
+        flex-direction: column;
+    }
+  }
