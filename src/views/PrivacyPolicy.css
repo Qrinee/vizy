@@ -1,0 +1,29 @@
+.privacy-policy {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .privacy-policy section {
+    margin-bottom: 2rem;
+  }
+  
+  .privacy-policy strong {
+    font-weight: bold;
+  }
+  
+  .privacy-policy a {
+    color: #0056b3;
+    text-decoration: none;
+  }
+  
+  .privacy-policy a:hover {
+    text-decoration: underline;
+  }
+  

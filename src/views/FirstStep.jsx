@@ -6,6 +6,7 @@ import CheckBox from '../components/CheckBox/CheckBox';
 import TwoItemsLayout from '../layouts/Two-Items-Layout/TwoItemsLayout';
 import CountryCodeSelect from '../components/CountryCodeSelect/CountryCodeSelect';
 import { useLanguage } from '../context/LanguageContext';
+import { Link } from 'react-router';
 
 export default function FirstStep({ formData, setFormData, setStep }) {
   const [errors, setErrors] = useState({});
@@ -137,7 +138,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               name="trueInformation"
               onChange={handleChange}
               checked={formData.trueInformation}
-              label={t.i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate}
+              label={<Link to={'/privacy'} style={{color: 'black'}}>{t.i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate}</Link>}
             />
             {errors.trueInformation && <p className="error">{errors.trueInformation}</p>}
           </div>
@@ -146,7 +147,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               name="acceptation"
               onChange={handleChange}
               checked={formData.acceptation}
-              label={<a href=''></a> + t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}
+              label={<Link to={'/terms'} style={{color: 'black'}}>{t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}</Link>}
             />
             {errors.acceptation && <p className="error">{errors.acceptation}</p>}
           </div>
