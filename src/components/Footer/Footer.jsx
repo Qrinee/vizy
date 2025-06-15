@@ -1,9 +1,27 @@
-import React from 'react'
-import './footer.css'
-export default function Footer() {
+import React from 'react';
+import './Footer.css';
+import { Link } from 'react-router';
+
+const Footer = () => {
   return (
-    <footer>
-      Immi-assist.online connects you with a global network of trusted immigration specialists. Visa and immigration requests are handled by our partners, ensuring expert support for your needs. We may receive affiliate commissions for some of the services we recommend.
+    <footer className="main-footer">
+      <div className="footer-content">
+        <div className="footer-links">
+          <Link to="/cookies" className="footer-link">Cookies Policy</Link>
+          <Link to="/privacy" className="footer-link">Privacy Policy</Link>
+          <Link to="/terms" className="footer-link">Terms of Use</Link>
+        </div>
+        <div className="footer-info">
+          <p className="copyright">
+            © {new Date().getFullYear()} DYZMAS sp. z o.o. All rights reserved.
+          </p>
+          <p className="company-info">
+            DYZMAS sp. z o.o. | Tax ID: PL6793205147 | Wieliczka, POLAND
+          </p>
+        </div>
+      </div>
     </footer>
-  )
-}
+  );
+};
+
+export default Footer;
