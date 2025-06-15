@@ -1,9 +1,9 @@
 import React from 'react';
-import '../Footer/Footer.css'
 import { Link } from 'react-router';
-
+import './footer.css'
 const Footer = () => {
   return (
+    <>
     <footer className="main-footer">
       <div className="footer-content">
         <div className="footer-links">
@@ -21,6 +21,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 
