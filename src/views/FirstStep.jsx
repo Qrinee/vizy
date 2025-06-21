@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Step from '../components/Step/Step';
 import InfoBox from '../components/InfoBox/InfoBox';
 import Input from '../components/Input/Input';
+import secure from '../assets/secure.png';
 import CheckBox from '../components/CheckBox/CheckBox';
 import TwoItemsLayout from '../layouts/Two-Items-Layout/TwoItemsLayout';
 import CountryCodeSelect from '../components/CountryCodeSelect/CountryCodeSelect';
@@ -56,6 +57,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
 
   return (
     <form onSubmit={handleSubmit}>
+
       <div className="steps">
         <Step number={1} title={t.submit_application_online} active={true} />
         <Step number={2} title={t.review_and_confirm_payment} />
@@ -152,6 +154,9 @@ export default function FirstStep({ formData, setFormData, setStep }) {
             {errors.acceptation && <p className="error">{errors.acceptation}</p>}
           </div>
         </InfoBox>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', flexWrap: 'wrap' }}>
+              <img src={secure} alt="Visa" height="130" />
+          </div>
       </div>
       <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}>{t.continue}</button>
     </form>

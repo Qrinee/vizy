@@ -12,13 +12,14 @@ import usa from '../../assets/usa.jpg';
 import usa2 from '../../assets/usa2.jpg';
 import laptop from '../../assets/laptop.png';
 import callendar from '../../assets/callendar.png';
+
 import email from '../../assets/email.png';
 import image from '../../assets/img.jpeg';
 import student from '../../assets/student.png';
 import time from '../../assets/time.png';
 import checked from '../../assets/checked.png';
 import wifi from '../../assets/wifi.png';
-
+import secur from '../../assets/secur.png'
 export default function AppContent() {
     const { t } = useLanguage();
         const [currentReview, setCurrentReview] = useState(0);
@@ -89,6 +90,7 @@ export default function AppContent() {
   
     return (
         <>
+        
             <div className='disclaimer'>{t.disclaimer}</div>
             <Overlay img={usa} bg={'rgba(0, 0, 0, 0.53)'}>
                 <h1>{t.title}</h1>
@@ -98,6 +100,7 @@ export default function AppContent() {
                         <button className='primary'>{t.btn_start}</button>
                     </Link>
                 </div>
+        <img src={secur} height={50} style={{marginTop: 20, opacity: '80%'}} />
             </Overlay>
 
 <section className="reviews-section" style={{ 
@@ -297,6 +300,7 @@ export default function AppContent() {
         marginTop: '1.25rem',
         gap: '0.4rem'
     }}>
+
         {reviews.map((_, index) => (
             <button
                 key={index}
@@ -355,16 +359,7 @@ export default function AppContent() {
                     <p><b>{t.requirements}:</b> {t.esta_requirements}</p>
                 </ToggleText>
             </PartLayout>
-<section className="payment-logos" style={{ textAlign: 'center', padding: '2rem', backgroundColor: '#f9f9f9' }}>
-    <h4>{t.payments_secure || 'Secure payments'}</h4>
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-        <img src="/assets/payments/visa.png" alt="Visa" height="40" />
-        <img src="/assets/payments/mastercard.png" alt="MasterCard" height="40" />
-        <img src="/assets/payments/paypal.png" alt="PayPal" height="40" />
-        <img src="/assets/payments/blik.png" alt="BLIK" height="40" />
-        <img src="/assets/payments/ssl.png" alt="SSL Secure" height="40" />
-    </div>
-</section>
+
 
             <PositivesLayout title={t.how_to_apply}>
                 <Positive icon={laptop} title={t.apply_online} content={t.apply_online_desc} />
