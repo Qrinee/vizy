@@ -356,7 +356,7 @@ export default function AppContent() {
                 </ToggleText>
             </PartLayout>
 <section className="payment-logos" style={{ textAlign: 'center', padding: '2rem', backgroundColor: '#f9f9f9' }}>
-    <h4>{t.payments_secure || 'Bezpieczne płatności'}</h4>
+    <h4>{t.payments_secure || 'Secure payments'}</h4>
     <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
         <img src="/assets/payments/visa.png" alt="Visa" height="40" />
         <img src="/assets/payments/mastercard.png" alt="MasterCard" height="40" />
