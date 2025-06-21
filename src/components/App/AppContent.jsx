@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import Overlay from '../Overlay/Overlay';
 import PartLayout from '../../layouts/Part-Layout/PartLayout';
@@ -21,6 +21,71 @@ import wifi from '../../assets/wifi.png';
 
 export default function AppContent() {
     const { t } = useLanguage();
+        const [currentReview, setCurrentReview] = useState(0);
+    const [isAutoPlay, setIsAutoPlay] = useState(true);
+    
+    // English reviews by default
+    const reviews = [
+        { 
+            name: 'Emily R.', 
+            text: 'The process was incredibly smooth and fast. Received my ESTA within 24 hours!',
+            date: 'June 15, 2023',
+            rating: 5
+        },
+        { 
+            name: 'Michael T.', 
+            text: 'Excellent service! Clear instructions and responsive support team. Highly recommend.',
+            date: 'May 22, 2023',
+            rating: 5
+        },
+        { 
+            name: 'Sarah K.', 
+            text: 'Was skeptical at first but everything worked perfectly. Visa arrived faster than promised.',
+            date: 'July 3, 2023',
+            rating: 4
+        },
+        { 
+            name: 'David L.', 
+            text: '5-star experience from start to finish. Will use this service for all my future travels.',
+            date: 'April 18, 2023',
+            rating: 5
+        },
+        { 
+            name: 'Jessica M.', 
+            text: 'The application was straightforward and the support team answered all my questions promptly.',
+            date: 'August 12, 2023',
+            rating: 5
+        },
+        { 
+            name: 'Robert W.', 
+            text: 'Impressed with the professionalism. Received my visa in just 18 hours!',
+            date: 'September 5, 2023',
+            rating: 5
+        }
+    ];
+
+    const nextReview = () => {
+        setCurrentReview((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevReview = () => {
+        setCurrentReview((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    };
+
+    const goToReview = (index) => {
+        setCurrentReview(index);
+    };
+
+    // Auto-play functionality
+    useEffect(() => {
+        let interval;
+        if (isAutoPlay) {
+            interval = setInterval(() => {
+                nextReview();
+            }, 5000);
+        }
+        return () => clearInterval(interval);
+    }, [isAutoPlay, currentReview]);
   
     return (
         <>
@@ -34,7 +99,234 @@ export default function AppContent() {
                     </Link>
                 </div>
             </Overlay>
-            
+
+<section className="reviews-section" style={{ 
+                padding: '3rem 1rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                backgroundColor: '#f8f9fa',
+                position: 'relative',
+                overflow: 'hidden'
+            }}>
+                <h3 style={{ 
+                    fontSize: '2rem', 
+                    marginBottom: '0.5rem',
+                    color: '#2c3e50',
+                    fontWeight: 600
+                }}>User Reviews</h3>
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    marginBottom: '1rem'
+                }}>
+                    <div style={{ 
+                        fontSize: '1.8rem', 
+                        fontWeight: 'bold',
+                        marginRight: '0.5rem',
+                        color: '#f39c12'
+                    }}>★★★★★</div>
+                    <p style={{ 
+                        fontSize: '1.2rem', 
+                        fontWeight: 'bold',
+                        color: '#3498db'
+                    }}>4.90 / 5.00</p>
+                </div>
+                <p style={{ 
+                    fontSize: '1rem', 
+                    color: '#7f8c8d',
+                    marginBottom: '2rem'
+                }}>(121 reviews)</p>
+                
+                {/* Carousel Container */}
+                <div style={{ 
+                    position: 'relative', 
+                    width: '100%', 
+                    maxWidth: '800px', 
+                    margin: '0 auto',
+                    padding: '0 50px'
+                }}>
+                    {/* Navigation Arrows */}
+                    <button 
+                        onClick={prevReview}
+                        style={{
+                            position: 'absolute',
+                            left: '0',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: '#3498db',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '40px',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                            zIndex: 10
+                        }}
+                        aria-label="Previous review"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M15.41 16.59L10.83 12L15.41 7.41L14 6L8 12L14 18L15.41 16.59Z"/>
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        onClick={nextReview}
+                        style={{
+                            position: 'absolute',
+                            right: '0',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: '#3498db',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '40px',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                            zIndex: 10
+                        }}
+                        aria-label="Next review"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
+                        </svg>
+                    </button>
+                    
+                    {/* Review Cards */}
+                    <div style={{ 
+                        display: 'flex', 
+                        transition: 'transform 0.5s ease', 
+                        transform: `translateX(${-currentReview * 100}%)`,
+                        width: '100%'
+                    }}>
+                        {reviews.map((review, index) => (
+                            <div key={index} style={{
+                                flex: '0 0 100%',
+                                padding: '0 10px',
+                                boxSizing: 'border-box'
+                            }}>
+                                <div className="review" style={{
+                                    padding: '1.5rem',
+                                    background: '#ffffff',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 5px 20px rgba(0,0,0,0.08)',
+                                    transition: 'all 0.3s ease',
+                                    border: '1px solid #eaeaea',
+                                    minHeight: '150px',
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}>
+                                    <div style={{ 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        marginBottom: '1rem'
+                                    }}>
+                                        <div style={{
+                                            width: '45px',
+                                            height: '45px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3498db',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            color: 'white',
+                                            fontWeight: 'bold',
+                                            fontSize: '1.2rem',
+                                            marginRight: '0.8rem'
+                                        }}>
+                                            {review.name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <p style={{ 
+                                                fontWeight: 600, 
+                                                margin: 0,
+                                                color: '#2c3e50'
+                                            }}>{review.name}</p>
+                                            <p style={{ 
+                                                fontSize: '0.8rem', 
+                                                color: '#95a5a6',
+                                                margin: 0
+                                            }}>{review.date}</p>
+                                        </div>
+                                    </div>
+                                    <p style={{ 
+                                        fontStyle: 'italic', 
+                                        lineHeight: 1.6,
+                                        color: '#34495e',
+                                        flexGrow: 1,
+                                        marginBottom: '1rem'
+                                    }}>"{review.text}"</p>
+                                    <div style={{ 
+                                        display: 'flex', 
+                                        marginTop: 'auto'
+                                    }}>
+                                        {[...Array(5)].map((_, i) => (
+                                            <svg 
+                                                key={i}
+                                                width="20" 
+                                                height="20" 
+                                                viewBox="0 0 24 24" 
+                                                fill={i < review.rating ? "#f39c12" : "#e0e0e0"} 
+                                                style={{marginRight: '2px'}}
+                                            >
+                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                            </svg>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                {/* Pagination Dots */}
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    marginTop: '1.5rem',
+                    gap: '0.5rem'
+                }}>
+                    {reviews.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => goToReview(index)}
+                            style={{
+                                width: '12px',
+                                height: '12px',
+                                borderRadius: '50%',
+                                border: 'none',
+                                background: currentReview === index ? '#3498db' : '#e0e0e0',
+                                cursor: 'pointer',
+                                padding: 0
+                            }}
+                            aria-label={`Go to review ${index + 1}`}
+                        />
+                    ))}
+                </div>
+                
+                {/* Auto-play toggle */}
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    marginTop: '1rem',
+                    fontSize: '0.9rem',
+                    color: '#7f8c8d'
+                }}>
+
+                </div>
+
+            </section>
+
+
+ 
             <PartLayout img={image}>
                 <h3>{t.h1}</h3>
                 <p>{t.desc}</p>
@@ -54,6 +346,16 @@ export default function AppContent() {
                     <p><b>{t.requirements}:</b> {t.esta_requirements}</p>
                 </ToggleText>
             </PartLayout>
+<section className="payment-logos" style={{ textAlign: 'center', padding: '2rem', backgroundColor: '#f9f9f9' }}>
+    <h4>{t.payments_secure || 'Bezpieczne płatności'}</h4>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+        <img src="/assets/payments/visa.png" alt="Visa" height="40" />
+        <img src="/assets/payments/mastercard.png" alt="MasterCard" height="40" />
+        <img src="/assets/payments/paypal.png" alt="PayPal" height="40" />
+        <img src="/assets/payments/blik.png" alt="BLIK" height="40" />
+        <img src="/assets/payments/ssl.png" alt="SSL Secure" height="40" />
+    </div>
+</section>
 
             <PositivesLayout title={t.how_to_apply}>
                 <Positive icon={laptop} title={t.apply_online} content={t.apply_online_desc} />
