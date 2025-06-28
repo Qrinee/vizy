@@ -56,6 +56,10 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   };
 
   return (
+    <>
+
+
+
     <form onSubmit={handleSubmit}>
 
       <div className="steps">
@@ -63,6 +67,30 @@ export default function FirstStep({ formData, setFormData, setStep }) {
         <Step number={2} title={t.review_and_confirm_payment} />
         <Step number={3} title={t.receive_approved_visa} />
       </div>
+      <div style={{width: 'calc(150px + 40vw)', margin: 'auto', padding: '20px', backgroundColor: '#e9f3ff', borderRadius: '10px', marginBottom: '1.5rem' }}>
+  <h3 style={{ fontWeight: 'bold', fontSize: '25px' }}>
+    Important Notice Regarding United States ESTA Applications:
+  </h3>
+  <ul style={{ listStyle: 'none', padding: 0 }}>
+    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
+      You may travel to the United States only for tourism, business, or transit purposes.
+    </li>
+    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
+      Your stay must not exceed 90 days.
+    </li>
+    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
+      Need to stay longer than 90 days? You must apply for a B1/B2 visa (Embassy visit required).
+    </li>
+    <li style={{ display: 'flex', alignItems: 'center' }}>
+      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
+      Each application must be submitted and paid for individually (Fee: USD 139).
+    </li>
+  </ul>
+</div>
+
       <div className="content-layout">
         <InfoBox title="Contact Details">
           <TwoItemsLayout 
@@ -160,5 +188,6 @@ export default function FirstStep({ formData, setFormData, setStep }) {
       </div>
       <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}>{t.continue}</button>
     </form>
+    </>
   );
 }
