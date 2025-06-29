@@ -12,7 +12,10 @@ import { Link } from 'react-router';
 export default function FirstStep({ formData, setFormData, setStep }) {
   const [errors, setErrors] = useState({});
     const { t } = useLanguage();
-
+  const [selectedOption, setSelectedOption] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState([]);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -44,14 +47,43 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   };
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
-      setStep(1);  
+    setError(null);
+    setValidationErrors([]);
+    const errors = validateForm();
+
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log("FORM DATA ❤️❤️❤️:", JSON.stringify(formData));
+      const response = await fetch("https://api.govguide.co/api/application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit application");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Stripe session URL not received.");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,9 +95,9 @@ export default function FirstStep({ formData, setFormData, setStep }) {
     <form onSubmit={handleSubmit}>
 
       <div className="steps">
-        <Step number={1} title={t.submit_application_online} active={true} />
-        <Step number={2} title={t.review_and_confirm_payment} />
-        <Step number={3} title={t.receive_approved_visa} />
+        <Step number={1} title={"Complete ESTA Application"} active={true} />
+        <Step number={2} title={"Make Secure Payment"} />
+        <Step number={3} title={"Receive ESTA by Email"} />
       </div>
       <div style={{width: 'calc(150px + 40vw)', margin: 'auto', padding: '20px', backgroundColor: '#e9f3ff', borderRadius: '10px', marginBottom: '1.5rem' }}>
   <h3 style={{ fontWeight: 'bold', fontSize: '25px' }}>
@@ -186,7 +218,8 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               <img src={secure} alt="Visa" height="130" />
           </div>
       </div>
-      <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}>{t.continue}</button>
+              {loading && <p>Submitting application...</p>}
+      <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}> {loading ? t.submitting : "Next step"}</button>
     </form>
     </>
   );
