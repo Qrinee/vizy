@@ -13,13 +13,12 @@ const Footer = () => {
         </div>
         <div className="footer-info">
           <p className="copyright">
-            © {new Date().getFullYear()} DYZMAS sp. z o.o. All rights reserved.
+            © {new Date().getFullYear()} Immigration Support ESTA division of GovGuide.co
           </p>
-          <p className="company-info">
-            DYZMAS sp. z o.o. | Tax ID: PL6793205147 | Wieliczka, POLAND
-          </p>
+
         </div>
       </div>
+
     </footer>
     </>
   );

@@ -40,7 +40,6 @@ export default function FirstStep({ formData, setFormData, setStep }) {
     if (!formData.phoneNumber.trim()) newErrors.phoneNumber = t.phone_number_is_required;
     if (!formData.emailAddress.trim()) newErrors.emailAddress = t.email_address_is_required;
     if (formData.emailAddress !== formData.confirmEmail) newErrors.confirmEmail = t.emails_do_not_match;
-    if (!formData.trueInformation) newErrors.trueInformation = t.must_confirm_information;
     if (!formData.acceptation) newErrors.acceptation = t.must_accept_terms;
   
     return newErrors;
@@ -196,13 +195,6 @@ export default function FirstStep({ formData, setFormData, setStep }) {
 
         <InfoBox title={t.declaration_of_the_applicant}>
           <div>
-            <CheckBox
-              name="trueInformation"
-              onChange={handleChange}
-              checked={formData.trueInformation}
-              label={<Link to={'/privacy'} style={{color: 'black'}}>{t.i_declare_that_all_the_information_i_have_provided_is_truthful_complete_and_accurate}</Link>}
-            />
-            {errors.trueInformation && <p className="error">{errors.trueInformation}</p>}
           </div>
           <div>
             <CheckBox
