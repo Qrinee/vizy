@@ -30,7 +30,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     return errors;
   };
 
-  const handleSelectChange = (key, value, index = 0) => {
+const handleSelectChange = (key, value, index = 0) => {
     setFormData((prev) => {
       let newFormData = { ...prev };
 
@@ -48,6 +48,13 @@ export default function SecondStep({ formData, setFormData, setStep }) {
 
       if (key === "numberOfTravelers") {
         const numberOfTravelers = parseInt(value, 10);
+        
+        // Handle invalid numbers
+        if (isNaN(numberOfTravelers)) {
+          newFormData.numberOfTravelers = prev.numberOfTravelers;
+          return newFormData;
+        }
+
         newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
           newFormData.personalDetails[i] || {
             gender: "",
@@ -67,61 +74,69 @@ export default function SecondStep({ formData, setFormData, setStep }) {
             passportExpirationDate: "",
           }
         );
+        
+        // Store as number instead of string
+        newFormData.numberOfTravelers = numberOfTravelers;
       }
 
       return newFormData;
     });
   };
 
-  const handleAddTraveler = () => {
-    setFormData(prev => {
-      const newNumberOfTravelers = prev.numberOfTravelers + 1;
-      return {
-        ...prev,
-        numberOfTravelers: newNumberOfTravelers,
-        personalDetails: [
-          ...prev.personalDetails,
-          {
-            gender: "",
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-            countryOfBirth: "",
-            nationality: "",
-          }
-        ],
-        passportDetails: [
-          ...prev.passportDetails,
-          {
-            passportIssuingCountry: "",
-            passportNumber: "",
-            passportInssuranceDate: "",
-            passportExpirationDate: "",
-          }
-        ]
-      };
-    });
-  };
-
-  const handleRemoveTraveler = (index) => {
-    if (formData.numberOfTravelers <= 1) return; // Don't remove the last traveler
+const handleAddTraveler = () => {
+  setFormData(prev => {
+    // Zapewniamy, że numberOfTravelers jest liczbą
+    const currentNumberOfTravelers = parseInt(prev.numberOfTravelers, 10) || 0;
+    const newNumberOfTravelers = currentNumberOfTravelers + 1;
     
-    setFormData(prev => {
-      const newPersonalDetails = [...prev.personalDetails];
-      const newPassportDetails = [...prev.passportDetails];
-      
-      newPersonalDetails.splice(index, 1);
-      newPassportDetails.splice(index, 1);
+    return {
+      ...prev,
+      numberOfTravelers: newNumberOfTravelers,
+      personalDetails: [
+        ...prev.personalDetails,
+        {
+          gender: "",
+          givenName: "",
+          middleName: "",
+          surName: "",
+          dateOfBirth: "",
+          countryOfBirth: "",
+          nationality: "",
+        }
+      ],
+      passportDetails: [
+        ...prev.passportDetails,
+        {
+          passportIssuingCountry: "",
+          passportNumber: "",
+          passportInssuranceDate: "",
+          passportExpirationDate: "",
+        }
+      ]
+    };
+  });
+};
 
-      return {
-        ...prev,
-        numberOfTravelers: prev.numberOfTravelers - 1,
-        personalDetails: newPersonalDetails,
-        passportDetails: newPassportDetails
-      };
-    });
-  };
+const handleRemoveTraveler = (index) => {
+  // Zapewniamy, że numberOfTravelers jest liczbą
+  const currentNumberOfTravelers = parseInt(formData.numberOfTravelers, 10) || 0;
+  if (currentNumberOfTravelers <= 1) return; // Don't remove the last traveler
+  
+  setFormData(prev => {
+    const newPersonalDetails = [...prev.personalDetails];
+    const newPassportDetails = [...prev.passportDetails];
+    
+    newPersonalDetails.splice(index, 1);
+    newPassportDetails.splice(index, 1);
+
+    return {
+      ...prev,
+      numberOfTravelers: currentNumberOfTravelers - 1,
+      personalDetails: newPersonalDetails,
+      passportDetails: newPassportDetails
+    };
+  });
+};
 
   const handleContinue = async () => {
     setError(null);
