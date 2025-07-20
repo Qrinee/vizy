@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import Overlay from '../Overlay/Overlay';
 import PartLayout from '../../layouts/Part-Layout/PartLayout';
 import PositivesLayout from '../../layouts/Positives-Layout/PositivesLayout';
 import Positive from '../Positive/Positive';
@@ -20,6 +19,7 @@ import time from '../../assets/time.png';
 import checked from '../../assets/checked.png';
 import wifi from '../../assets/wifi.png';
 import secur from '../../assets/secur.png'
+import PhotoSection from '../PhotoSection/PhotoSection';
 export default function AppContent() {
     const { t } = useLanguage();
         const [currentReview, setCurrentReview] = useState(0);
@@ -90,18 +90,8 @@ export default function AppContent() {
   
     return (
         <>
-        
-            <div className='disclaimer'>{t.disclaimer}</div>
-            <Overlay img={usa} bg={'rgba(0, 0, 0, 0.53)'}>
-                <h1>{t.title}</h1>
-                <h2>{t.subtitle}</h2>
-                <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
-                    <Link to={'/application'}>
-                        <button className='primary'>{t.btn_start}</button>
-                    </Link>
-                </div>
-        <img src={secur} height={50} style={{marginTop: 20, opacity: '80%'}} />
-            </Overlay>
+
+        <PhotoSection/>
 
 <section className="reviews-section" style={{ 
     padding: '2rem 1rem', 

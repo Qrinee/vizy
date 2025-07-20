@@ -1,5 +1,4 @@
 header{
-    background-color: rgb(34, 34, 34);
     padding: 10px;
 }
 
@@ -10,21 +9,28 @@ header{
     align-items: center;
 }
 
-
-.contact-button {
-    padding: 8px 16px;
-    background-color: white;
-    margin-left: 20px;
+.header-actions select{
+    font-weight: 600;
+      
+    border-radius: 10px;
+      border: 1px solid rgba(128, 128, 128, 0.466);
     color: black;
-    border: none;
-    border-radius: 6px;
+}
+.contact-button {
+    padding: 6px 16px;
+background-image: linear-gradient(to right, #25CBD6, #00EE8A);
+
+    margin-left: 20px;
+    color: white;
+
+    border-radius: 15px;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .contact-button:hover {
-    background-color: rgb(182, 182, 182);
+    color: white;
 }

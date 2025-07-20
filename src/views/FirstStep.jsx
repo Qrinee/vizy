@@ -1,84 +1,89 @@
-import React, { useState } from 'react';
-import Step from '../components/Step/Step';
+import React, { useState, useEffect } from 'react';
+import ReactFlagsSelect from 'react-flags-select';
 import InfoBox from '../components/InfoBox/InfoBox';
 import Input from '../components/Input/Input';
-import secure from '../assets/secure.png';
 import CheckBox from '../components/CheckBox/CheckBox';
-import TwoItemsLayout from '../layouts/Two-Items-Layout/TwoItemsLayout';
 import CountryCodeSelect from '../components/CountryCodeSelect/CountryCodeSelect';
 import { useLanguage } from '../context/LanguageContext';
-import { Link } from 'react-router';
+import { useLocation } from 'react-router';
 
 export default function FirstStep({ formData, setFormData, setStep }) {
+  const { t } = useLanguage();
   const [errors, setErrors] = useState({});
-    const { t } = useLanguage();
-  const [selectedOption, setSelectedOption] = useState("");
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [validationErrors, setValidationErrors] = useState([]);
+  const [error, setError] = useState(null);
+
+    const location = useLocation();
+  const { fromCountry, toCountry, fromLabel, toLabel } = location.state || {};
+  
+  // Funkcja do określania czy wymagana jest wiza
+  const isVisaRequired = (countryCode) => {
+    return countryCode !== 'GB'; // Tylko UK nie wymaga wizy
+  };
+  const handleNationalityChange = (countryCode) => {
+    // Pobierz nazwę kraju z komponentu ReactFlagsSelect
+    const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(countryCode);
+    
+    setFormData(prev => ({
+      ...prev,
+      nationality: countryCode, // Changed from toCountry to countryCode
+      countryName: countryName || countryCode,
+      visaRequired: isVisaRequired(countryCode),
+    }));
+  };
+
+  // Ustaw domyślny kraj przy pierwszym renderowaniu
+  useEffect(() => {
+    if (!formData.nationality) {
+      handleNationalityChange('US'); // Domyślnie USA
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const handleCountryCodeChange = (code) => {
-    setFormData((prev) => ({
-      ...prev,
-      countryCode: code,
-      phoneNumber: `${code} ${prev.phoneNumber.replace(prev.countryCode, '').trim()}`,
-    }));
-  };
 
+    useEffect(() => {
+    if (fromCountry && !formData.nationality) {
+      handleNationalityChange(fromCountry);
+    } else if (!formData.nationality) {
+      handleNationalityChange('US'); // Fallback to US if no fromCountry
+    }
+  }, [fromCountry]);
 
 
   const validateForm = () => {
     const newErrors = {};
+    if (!formData.nationality) newErrors.nationality = t.nationality_required;
     if (!formData.contactName.trim()) newErrors.contactName = t.contact_name_is_required;
     if (!formData.phoneNumber.trim()) newErrors.phoneNumber = t.phone_number_is_required;
     if (!formData.emailAddress.trim()) newErrors.emailAddress = t.email_address_is_required;
     if (formData.emailAddress !== formData.confirmEmail) newErrors.confirmEmail = t.emails_do_not_match;
     if (!formData.acceptation) newErrors.acceptation = t.must_accept_terms;
-  
     return newErrors;
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setValidationErrors([]);
-    const errors = validateForm();
-
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
+    const validationErrors = validateForm();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
     setLoading(true);
+
     try {
-      console.log("FORM DATA ❤️❤️❤️:", JSON.stringify(formData));
-      const response = await fetch("https://api.govguide.co/api/application", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+      const response = await fetch('https://api.govguide.co/api/application', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
-
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Stripe session URL not received.");
-      }
+      if (!response.ok) throw new Error(data.error || 'Failed to submit application');
+      if (data.url) window.location.href = data.url;
     } catch (err) {
       setError(err.message);
     } finally {
@@ -86,133 +91,138 @@ export default function FirstStep({ formData, setFormData, setStep }) {
     }
   };
 
+  // Pobierz nazwę aktualnie wybranego kraju
+  const getCountryName = (code) => {
+    return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code;
+  };
+
   return (
-    <>
-
-
-
-    <form onSubmit={handleSubmit}>
-
-      <div className="steps">
-        <Step number={1} title={"Complete ESTA Application"} active={true} />
-        <Step number={2} title={"Make Secure Payment"} />
-        <Step number={3} title={"Receive ESTA by Email"} />
+    <form onSubmit={handleSubmit} style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      {/* Information Section */}
+      <div style={{ backgroundColor: '#e9f3ff', padding: '20px', borderRadius: '10px', marginBottom: '20px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '10px' }}>Apply now for your United Kingdom ETA</h1>
+        <p>
+          {formData.visaRequired ? (
+            <span style={{ backgroundColor: '#cce0ff', color: '#003366', padding: '5px 10px', borderRadius: '6px', fontSize: '13px', fontWeight: 'bold', marginRight: '10px' }}>
+              Visa required
+            </span>
+          ) : (
+            <span style={{ backgroundColor: '#d4f7dc', color: '#0a5c1a', padding: '5px 10px', borderRadius: '6px', fontSize: '13px', fontWeight: 'bold', marginRight: '10px' }}>
+              Visa not required
+            </span>
+          )}
+          {formData.visaRequired 
+            ? `You need a visa to travel to United Kingdom if you have a passport from ${formData.countryName}.`
+            : `You don't need a visa in United Kingdom with ${formData.countryName} passport.`}
+        </p>
       </div>
-      <div style={{width: 'calc(150px + 40vw)', margin: 'auto', padding: '20px', backgroundColor: '#e9f3ff', borderRadius: '10px', marginBottom: '1.5rem' }}>
-  <h3 style={{ fontWeight: 'bold', fontSize: '25px' }}>
-    Important Notice Regarding United States ESTA Applications:
-  </h3>
-  <ul style={{ listStyle: 'none', padding: 0 }}>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
-      You may travel to the United States only for tourism, business, or transit purposes.
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
-      Your stay must not exceed 90 days.
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
-      Need to stay longer than 90 days? You must apply for a B1/B2 visa (Embassy visit required).
-    </li>
-    <li style={{ display: 'flex', alignItems: 'center' }}>
-      <span style={{ color: 'green', marginRight: '0.5rem' }}>✅</span>
-      Each application must be submitted and paid for individually (Fee: USD 139).
-    </li>
-  </ul>
-</div>
 
-      <div className="content-layout">
-        <InfoBox title="Contact Details">
-          <TwoItemsLayout 
-            first={
-              <div>
-                <Input
-                  type="text"
-                  required
-                  label={t.contact_name}
-                  name="contactName"
-                  value={formData.contactName}
-                  onChange={handleChange}
-                  question={t.the_contact_person_is_who_will_receive_every_update_and_communication_regarding_your_application}
-                  placeholder="John Doe"
-                  bottomText={t.indicate_the_contact_person_s_full_name}
-                />
-                {errors.contactName && <p className="error">{errors.contactName}</p>}
-              </div>
-            }
-            second={
-              <div>
-                <Input
-                  type="tel"
-                  left={<CountryCodeSelect onChange={handleCountryCodeChange} value={formData.countryCode} />}
-                  required
-                  label={t.mobile_cellphone_number}
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  placeholder="795325775" 
-                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
-                />
-                {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
-              </div>
-            }
-          />
-          <TwoItemsLayout 
-            first={
-              <div>
-                <Input
-                  type="email"
-                  required
-                  label={t.email_address}
-                  name="emailAddress"
-                  value={formData.emailAddress}
-                  onChange={handleChange}
-                  placeholder="email@mail.com"
-                  bottomText={t.provide_a_contact_email_address}
-                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
-                />
-                {errors.emailAddress && <p className="error">{errors.emailAddress}</p>}
-              </div>
-            }
-            second={
-              <div>
-                <Input
-                  type="email"
-                  required
-                  label={t.confirm_email_address}
-                  name="confirmEmail"
-                  value={formData.confirmEmail}
-                  onChange={handleChange}
-                  placeholder="email@mail.com"
-                  question={t.all_information_regarding_your_application_including_payment_confirmation_and_updates_will_be_sent_to_the_email_address_you_provided}
-                />
-                {errors.confirmEmail && <p className="error">{errors.confirmEmail}</p>}
-              </div>
-            }
-          />
-        </InfoBox> 
-
-        <InfoBox title={t.declaration_of_the_applicant}>
-          <div>
-          </div>
-          <div>
-            <CheckBox
-              name="acceptation"
-              onChange={handleChange}
-              checked={formData.acceptation}
-              label={<Link to={'/terms'} style={{color: 'black'}}>{t.i_have_read_and_agree_to_the_terms_and_conditions_the_cancellation_refund_policy_and_privacy_policy}</Link>}
-            />
-            {errors.acceptation && <p className="error">{errors.acceptation}</p>}
-          </div>
-        </InfoBox>
-                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', flexWrap: 'wrap' }}>
-              <img src={secure} alt="Visa" height="130" />
-          </div>
+      {/* Nationality Selection */}
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>
+          What's your nationality?
+        </label>
+        
+        <ReactFlagsSelect
+          selected={formData.nationality}
+          onSelect={handleNationalityChange}
+          searchable={true}
+          placeholder="Select Nationality"
+          className="flag-select"
+          style={{ border: errors.nationality ? '1px solid red' : '1px solid #ccc' }}
+        />
+        
+        <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center' }}>
+          {formData.nationality && (
+            <>
+              <img 
+                src={`https://flagcdn.com/24x18/${formData.nationality.toLowerCase()}.png`} 
+                alt={formData.countryName} 
+                style={{ width: '24px', height: '18px', marginRight: '10px' }} 
+              />
+              <span>{formData.countryName || getCountryName(formData.nationality)}</span>
+            </>
+          )}
+        </div>
+        
+        {errors.nationality && (
+          <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>
+            {errors.nationality}
+          </p>
+        )}
+        
+        <p style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+          Ensure you select the nationality of the passport you'll be traveling with.
+        </p>
       </div>
-              {loading && <p>Submitting application...</p>}
-      <button type="submit" className="primary" style={{margin: 'auto', display: 'block', marginTop: 20}}> {loading ? t.submitting : "Next step"}</button>
+
+      {/* Visa Type Selection */}
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Applying for</label>
+        <select
+          name="visaType"
+          value={formData.visaType || ''}
+          onChange={handleChange}
+          style={{ 
+            border: errors.visaType ? '1px solid red' : '1px solid #ccc',
+            borderRadius: '6px',
+            padding: '10px',
+            width: '100%',
+            color: 'black'
+          }}
+        >
+          <option value="">Select visa type</option>
+          <option value="ETA-2YR">United Kingdom ETA - 2 years, Multiple entry</option>
+          <option value="ETA-5YR">United Kingdom ETA - 5 years, Multiple entry</option>
+        </select>
+        {errors.visaType && (
+          <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>
+            {errors.visaType}
+          </p>
+        )}
+      </div>
+
+
+      {/* Terms and Conditions */}
+      <div style={{ marginBottom: '20px' }}>
+        <CheckBox
+          name="acceptation"
+          checked={formData.acceptation || false}
+          onChange={handleChange}
+          label="I agree to the Terms and Conditions and Privacy Policy"
+        />
+        {errors.acceptation && (
+          <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>
+            {errors.acceptation}
+          </p>
+        )}
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        disabled={loading}
+        style={{
+          backgroundColor: '#00cc88',
+          color: 'white',
+          fontWeight: 'bold',
+          padding: '15px 25px',
+          borderRadius: '8px',
+          border: 'none',
+          marginTop: '20px',
+          width: '100%',
+          cursor: 'pointer',
+          opacity: loading ? 0.7 : 1,
+        }}
+      >
+        {loading ? 'Submitting application...' : 'Start your application'}
+      </button>
+
+      {error && (
+        <p style={{ color: 'red', textAlign: 'center', marginTop: '15px' }}>
+          {error}
+        </p>
+      )}
     </form>
-    </>
   );
 }

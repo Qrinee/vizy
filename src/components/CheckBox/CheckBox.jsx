@@ -3,7 +3,7 @@ import './checkbox.css'
 
 export default function CheckBox({ label, checked, onChange, name }) {
   return (
-    <label className="checkbox-container">
+    <label className="checkbox-container" style={{margin: 0}}>
       <input
         name={name}
         type="checkbox"

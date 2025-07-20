@@ -1,0 +1,55 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  background-image: url('../src/assets/heroimage_xl.webp');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: white;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+  width: 76vw;
+  margin: auto;
+}
+
+.text-p{
+    font-weight: 500;
+      color: #0b3947;
+}
+
+.text-container {
+  max-width: 800px;
+  color: #0b3947;
+  margin-left: 20px;
+}
+
+.text-container h1 {
+  font-size: calc(15px + 2vw);
+  margin-bottom: 20px;
+}
+
+.text-container p {
+  font-size: calc(10px + 0.5vw);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .text-container {
+    margin-left: 80px;
+  }
+}
