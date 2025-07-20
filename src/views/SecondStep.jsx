@@ -7,11 +7,10 @@ import TravelDetails from "../components/TravelDetails/TravelDetails";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function SecondStep({ formData, setFormData, setStep }) {
-  const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
-  const {t} = useLanguage()
+  const { t } = useLanguage();
 
   const validateFormData = () => {
     const errors = [];
@@ -77,6 +76,56 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     });
   };
 
+  const handleAddTraveler = () => {
+    setFormData(prev => {
+      const newNumberOfTravelers = prev.numberOfTravelers + 1;
+      return {
+        ...prev,
+        numberOfTravelers: newNumberOfTravelers,
+        personalDetails: [
+          ...prev.personalDetails,
+          {
+            gender: "",
+            givenName: "",
+            middleName: "",
+            surName: "",
+            dateOfBirth: "",
+            countryOfBirth: "",
+            nationality: "",
+          }
+        ],
+        passportDetails: [
+          ...prev.passportDetails,
+          {
+            passportIssuingCountry: "",
+            passportNumber: "",
+            passportInssuranceDate: "",
+            passportExpirationDate: "",
+          }
+        ]
+      };
+    });
+  };
+
+  const handleRemoveTraveler = (index) => {
+    if (formData.numberOfTravelers <= 1) return; // Don't remove the last traveler
+    
+    setFormData(prev => {
+      const newPersonalDetails = [...prev.personalDetails];
+      const newPassportDetails = [...prev.passportDetails];
+      
+      newPersonalDetails.splice(index, 1);
+      newPassportDetails.splice(index, 1);
+
+      return {
+        ...prev,
+        numberOfTravelers: prev.numberOfTravelers - 1,
+        personalDetails: newPersonalDetails,
+        passportDetails: newPassportDetails
+      };
+    });
+  };
+
   const handleContinue = async () => {
     setError(null);
     setValidationErrors([]);
@@ -89,7 +138,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
 
     setLoading(true);
     try {
-      console.log("FORM DATA ❤️❤️❤️:", JSON.stringify(formData));
+      console.log("FORM DATA:", JSON.stringify(formData));
       const response = await fetch("https://api.govguide.co/api/application", {
         method: "POST",
         headers: {
@@ -119,45 +168,126 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   return (
     <>
       <div className="steps">
-        <Step number={1} title={t.submit_application_online} active={true} />
-        <Step number={2} title={t.review_and_confirm_payment} />
-        <Step number={3} title={t.receive_approved_visa} />
+        <Step number={1} title={"Trip details"}  />
+        <Step number={2} title={"Your info"} active={true} />
+        <Step number={3} title={"Checkout"} />
       </div>
       <div className="content-layout">
-        <TravelDetails formData={formData} handleSelectChange={handleSelectChange} />
         {formData.personalDetails.map((_, index) => (
-          <div key={index}>
+          <div key={index} className="traveler-section" style={{ position: "relative" }}>
+     
+            
             <PersonalDetails
-              key={`personal-${index}`}
               formData={formData}
               handleSelectChange={handleSelectChange}
-              title={`Personal details - pax ${formData.personalDetails[index].givenName || ''}`}
+              title={`Traveler #${index + 1}`}
               index={index}
             />
-            <PassportDetails
-              key={`passport-${index}`}
-              formData={formData}
-              handleSelectChange={handleSelectChange}
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              title={`Passport details - pax ${formData.personalDetails[index].givenName || ''}`}
-              index={index}
-            />
+
+       {index > 0 && (
+              <button 
+                type="button"
+                onClick={() => handleRemoveTraveler(index)}
+                style={{
+                  backgroundColor: "#f44336",
+                  color: "white",
+                  padding: "8px 15px",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  marginBottom: "15px",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px"
+                }}
+              >
+                <span style={{ fontSize: "16px" }}>✕</span>
+                Remove Traveler {index + 1}
+              </button>
+            )}
+
           </div>
         ))}
-        <BillingInformation formData={formData} handleSelectChange={handleSelectChange} />
-        
-        {validationErrors.length > 0 && (
-          <ul style={{ color: "red" }}>
-            {validationErrors.map((err, idx) => (
-              <li key={idx}>{err}</li>
-            ))}
-          </ul>
-        )}
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
-        {loading && <p>Submitting application...</p>}
 
-        <button style={{margin: 'auto', display: 'block', marginTop: '20px'}} onClick={handleContinue} disabled={loading} className="primary">
+        <button 
+          type="button"
+          onClick={handleAddTraveler}
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            margin: "20px 0",
+            display: "block",
+            width: "200px",
+            fontWeight: "bold"
+          }}
+        >
+          + Add Traveler
+        </button>
+
+        {validationErrors.length > 0 && (
+          <div style={{ 
+            backgroundColor: "#ffebee",
+            padding: "15px",
+            borderRadius: "4px",
+            marginBottom: "20px"
+          }}>
+            <h4 style={{ color: "#d32f2f", marginTop: 0 }}>Please fix the following errors:</h4>
+            <ul style={{ color: "#d32f2f", paddingLeft: "20px", marginBottom: 0 }}>
+              {validationErrors.map((err, idx) => (
+                <li key={idx}>{err}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {error && (
+          <div style={{ 
+            backgroundColor: "#ffebee",
+            color: "#d32f2f",
+            padding: "15px",
+            borderRadius: "4px",
+            marginBottom: "20px"
+          }}>
+            Error: {error}
+          </div>
+        )}
+
+        {loading && (
+          <div style={{ 
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            marginBottom: "20px"
+          }}>
+            <div className="spinner"></div>
+            <span>Submitting application...</span>
+          </div>
+        )}
+
+        <button 
+          style={{
+            margin: 'auto', 
+            display: 'block', 
+            marginTop: '20px',
+            padding: '12px 24px',
+            backgroundColor: '#1976d2',
+            color: 'black',
+            border: 'none',
+            borderRadius: '20px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            minWidth: '250px'
+          }} 
+          onClick={handleContinue} 
+          disabled={loading} 
+          className='submit-btn'
+        >
           {loading ? t.submitting : t.continue_to_payment}
         </button>
       </div>

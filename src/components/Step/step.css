@@ -1,39 +1,51 @@
-.step{
-    display: flex;
-    padding: 10px 20px;
-    align-items: center;
+.steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10vh;
+  margin-bottom: 2vh;
+  position: relative;
 }
 
-.step-number{
-    width: 40px;
-    height: 40px;
-    font-weight: bold;
-    font-size: 20px;
-    margin-right: 10px;
-    border: 2px dashed rgb(31, 31, 31);
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
+.step {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  position: relative;
+
+  z-index: 1;
 }
 
 
-.active .step-number{
-    border: 2px solid rgb(31, 31, 31);
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 10px;
+  border: 2px solid #003b4a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: #003b4a;
 }
 
-.active{
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    border: 2px solid rgba(0, 0, 0, 0.151);
+.step.completed .step-number {
+  background-color: #003b4a;
+  color: white;
 }
 
-.steps{
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10vh;
-    margin-bottom: 2vh;
+.step.active .step-number {
+  background-color: white;
+  border: 2px solid #003b4a;
+  color: #003b4a;
+}
+
+.step-title {
+  font-weight: 500;
+  color: #003b4a;
 }

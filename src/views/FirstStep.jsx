@@ -3,7 +3,7 @@ import ReactFlagsSelect from 'react-flags-select';
 import CheckBox from '../components/CheckBox/CheckBox';
 import { useLocation } from 'react-router';
 
-export default function FirstStep({ formData, setFormData }) {
+export default function FirstStep({ formData, setFormData, setStep }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -52,22 +52,24 @@ export default function FirstStep({ formData, setFormData }) {
     const validationErrors = validateForm();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
+
     
-    setLoading(true);
-    try {
-      const response = await fetch('https://api.govguide.co/api/application', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Payment failed');
-      window.location.href = data.url;
-    } catch (err) {
-      setError(err.message || 'Payment processing error');
-    } finally {
-      setLoading(false);
-    }
+    setStep(1)
+    // setLoading(true);
+    // try {
+    //   const response = await fetch('https://api.govguide.co/api/application', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(formData)
+    //   });
+    //   const data = await response.json();
+    //   if (!response.ok) throw new Error(data.error || 'Payment failed');
+    //   window.location.href = data.url;
+    // } catch (err) {
+    //   setError(err.message || 'Payment processing error');
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -178,7 +180,7 @@ export default function FirstStep({ formData, setFormData }) {
           opacity: loading ? 0.7 : 1,
         }}
       >
-        {loading ? 'Submitting application...' : 'Start your application'}
+        {loading ? 'Submitting application...' : 'Next step'}
       </button>
 
       {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '15px' }}>{error}</p>}

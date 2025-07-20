@@ -13,12 +13,7 @@ const PersonalDetails = ({ formData, handleSelectChange, title, index }) => {
 
   return (
     <InfoBox title={title}>
-      <Select
-        label={t.gender}
-        options={[t.male, t.female]}
-        value={formData.personalDetails[index]?.gender || ""}
-        onChange={(val) => handleSelectChange(`personalDetails.gender`, val.target.value, index)}
-      />
+
       <ThreeItemsLayout
         first={
           <Input

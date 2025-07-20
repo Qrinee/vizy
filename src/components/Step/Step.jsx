@@ -1,10 +1,13 @@
-import React from 'react'
-import './step.css'
-export default function Step({number, title, active}) {
+import React from 'react';
+import './step.css';
+
+export default function Step({ number, title, active, completed }) {
   return (
-    <div className={`step  ${active ? 'active' :  ''}`}>
-        <div className='step-number'>{number}</div>
-        <div>{title}</div>
+    <div className={`step ${active ? 'active' : ''} ${completed ? 'completed' : ''}`}>
+      <div className="step-number">
+        {completed ? '✓' : number}
+      </div>
+      <div className="step-title">{title}</div>
     </div>
-  )
+  );
 }
