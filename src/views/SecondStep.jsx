@@ -26,9 +26,6 @@ export default function SecondStep({ formData, setFormData, setStep }) {
       if (!pax.nationality) errors.push(`Traveler ${index + 1}: Nationality is required.`);
     });
 
-    formData.passportDetails.forEach((passport, index) => {
-      if (!passport.passportIssuingCountry) errors.push(`Traveler ${index + 1}: Passport issuing country is required.`);
-    });
 
     return errors;
   };
@@ -188,21 +185,9 @@ export default function SecondStep({ formData, setFormData, setStep }) {
               <button 
                 type="button"
                 onClick={() => handleRemoveTraveler(index)}
-                style={{
-                  backgroundColor: "#f44336",
-                  color: "white",
-                  padding: "8px 15px",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  marginBottom: "15px",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px"
-                }}
+                className="removetraveler"
               >
-                <span style={{ fontSize: "16px" }}>✕</span>
+                <span style={{ fontSize: "14px", marginRight: 8 }}>✕</span>
                 Remove Traveler {index + 1}
               </button>
             )}
@@ -213,18 +198,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
         <button 
           type="button"
           onClick={handleAddTraveler}
-          style={{
-            backgroundColor: "#4CAF50",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            margin: "20px 0",
-            display: "block",
-            width: "200px",
-            fontWeight: "bold"
-          }}
+          className="addtraveler"
         >
           + Add Traveler
         </button>

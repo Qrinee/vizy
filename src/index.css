@@ -18,6 +18,50 @@ button{
     cursor: pointer;
 }
 
+.addtraveler{
+        padding: 10px 25px;
+background-image: linear-gradient(to right, #25CBD6, #00EE8A);
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.removetraveler{
+            padding: 10px 25px;
+background-image: linear-gradient(to right, #d62525, #ee5f00);
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+
+.removetraveler:hover{
+
+background-image: linear-gradient(to right, #d62525, #ee5f00);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(238, 0, 0, 0.4);
+}
+
+.addtraveler:hover {
+
+    background-image: linear-gradient(to right, #1be5f0, #00ff9d);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 238, 138, 0.4);
+}
+
+
 li{
     margin-top: 10px;
 }
