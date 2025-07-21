@@ -84,6 +84,7 @@ const TravelForm = () => {
           <div className="form-group">
             <div style={{color: 'black'}}>
                 <ReactFlagsSelect
+                            searchable={true}
     selected={fromCountry}
     onSelect={(code) => setFromCountry(code)}
   />
