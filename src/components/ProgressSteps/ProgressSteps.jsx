@@ -2,27 +2,32 @@ import React from 'react';
 import './ProgressSteps.css';
 
 const steps = [
-  { number: 1, label: 'Trip details', completed: true },
-  { number: 2, label: 'Your info', completed: false },
-  { number: 3, label: 'Checkout', completed: false },
+  { number: 1, label: 'Trip details' },
+  { number: 2, label: 'Your info' },
+  { number: 3, label: 'Checkout' },
 ];
 
-export default function ProgressSteps() {
+export default function ProgressSteps({ step }) {
   return (
     <div className="progress-container">
-      {steps.map((step, index) => (
-        <React.Fragment key={step.number}>
-          <div className={`step ${step.completed ? 'completed' : ''} ${index === 1 ? 'active' : ''}`}>
-            <div className="step-number">
-              {step.completed ? '✓' : step.number}
+      {steps.map((s, index) => {
+        const isCompleted = s.number < step;
+        const isActive = s.number === step;
+
+        return (
+          <React.Fragment key={s.number}>
+            <div className={`step ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}`}>
+              <div className="step-number">
+                {isCompleted ? '✓' : s.number}
+              </div>
+              <span className="step-label">{s.label}</span>
             </div>
-            <span className="step-label">{step.label}</span>
-          </div>
-          {index < steps.length - 1 && (
-            <div className={`line ${index < 1 ? 'filled' : ''}`}></div>
-          )}
-        </React.Fragment>
-      ))}
+            {index < steps.length - 1 && (
+              <div className={`line ${s.number < step ? 'filled' : ''}`}></div>
+            )}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 }

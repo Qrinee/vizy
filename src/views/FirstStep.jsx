@@ -62,7 +62,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   return (
     <>
     <div style={{width: 'calc(500px + 20vw)', margin: '0 auto'}}>
-      <ProgressSteps/>
+      <ProgressSteps step={2}/>
     </div>
     <div style={{display: 'flex', margin: 'auto', justifyContent: 'center', flexWrap: 'wrap'}}>
     
