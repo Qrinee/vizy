@@ -1,0 +1,48 @@
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #003b49;
+  font-weight: 500;
+}
+
+.step-number {
+  background-color: #003b49;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.step.active .step-number {
+  background-color: #003b49;
+}
+
+.line {
+  height: 2px;
+  flex: 1;
+  background-color: #d3e0e4;
+  margin: 0 10px;
+}
+
+.line.filled {
+  background-color: #003b49;
+}
+
+.completed .step-number {
+  background-color: #003b49;
+}
+
+.completed .step-label {
+  font-weight: 600;
+}

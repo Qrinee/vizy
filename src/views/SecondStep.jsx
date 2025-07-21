@@ -5,6 +5,9 @@ import BillingInformation from "../components/BillingInformation/BillingInformat
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import TravelDetails from "../components/TravelDetails/TravelDetails";
 import { useLanguage } from "../context/LanguageContext";
+import UKETAInfoCard from "../components/UKETAInfoCard/UKETAInfoCard";
+import ESTASummary from './../components/EstaSummary/ESTASummary';
+import ProgressSteps from './../components/ProgressSteps/ProgressSteps';
 
 export default function SecondStep({ formData, setFormData, setStep }) {
   const [error, setError] = useState(null);
@@ -179,12 +182,18 @@ const handleRemoveTraveler = (index) => {
 
   return (
     <>
-      <div className="steps">
-        <Step number={1} title={"Trip details"}  />
-        <Step number={2} title={"Your info"} active={true} />
-        <Step number={3} title={"Checkout"} />
-      </div>
+              <div style={{width: 'calc(500px + 50vw)', margin: 'auto'}}>
+
+            <h1 style={{fontSize: '30px', marginTop: '5vh'}}>United Kingdom Visa </h1>
+            <ProgressSteps/>
+          </div>
+     <div style={{display: 'flex', margin: 'auto', justifyContent: 'center', flexWrap: 'wrap'}}>
+
+          <div>
       <div className="content-layout">
+          
+                 <h2>Your personal details</h2>
+                 <p style={{fontSize: '17px', fontWeight: '500'}}>These should match what's in your passport.</p>
         {formData.personalDetails.map((_, index) => (
           <div key={index} className="traveler-section" style={{ position: "relative" }}>
      
@@ -215,7 +224,9 @@ const handleRemoveTraveler = (index) => {
           onClick={handleAddTraveler}
           className="addtraveler"
         >
-          + Add Traveler
+          
+
+          + Add another Traveler
         </button>
 
         {validationErrors.length > 0 && (
@@ -258,7 +269,13 @@ const handleRemoveTraveler = (index) => {
           </div>
         )}
 
-        <button 
+
+      </div>
+      
+      </div>
+      <div style={{margin: '20px', width: '350px'}}>
+        <ESTASummary traveler={formData.numberOfTravelers || 1} total={'100 USD'}/>
+                <button 
           style={{
             margin: 'auto', 
             display: 'block', 
@@ -271,15 +288,17 @@ const handleRemoveTraveler = (index) => {
             cursor: 'pointer',
             fontSize: '16px',
             fontWeight: 'bold',
-            minWidth: '250px'
+            width: '100%'
           }} 
           onClick={handleContinue} 
           disabled={loading} 
           className='submit-btn'
         >
-          {loading ? t.submitting : t.continue_to_payment}
+          {loading ? t.submitting : "Save and continue"}
         </button>
       </div>
+      </div>
+
     </>
   );
 }

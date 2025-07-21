@@ -55,6 +55,7 @@ const PersonalDetails = ({ formData, handleSelectChange, title, index }) => {
           <Select
             label={t.country_of_birth}
             required
+ 
             options={countries}
             value={formData.personalDetails[index]?.countryOfBirth || ""}
             onChange={(val) => handleSelectChange(`personalDetails.countryOfBirth`, val.target.value, index)}
@@ -63,6 +64,7 @@ const PersonalDetails = ({ formData, handleSelectChange, title, index }) => {
         third={
           <Select
             label={t.nationality}
+
             required
             options={countries}
             value={formData.personalDetails[index]?.nationality || ""}

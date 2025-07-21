@@ -20,26 +20,28 @@ button{
 
 .addtraveler{
         padding: 10px 25px;
-background-image: linear-gradient(to right, #25CBD6, #00EE8A);
-    color: white;
+background-color: rgb(205 219 255);
+    color: rgb(57 79 225);
     border: 0;
     border-radius: 15px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     margin-top: 20px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s all;
 }
 
+
+
 .removetraveler{
-            padding: 10px 25px;
-background-image: linear-gradient(to right, #d62525, #ee5f00);
-    color: white;
+        padding: 10px 25px;
+background-color: rgb(255, 205, 205);
+    color: rgb(225, 57, 57);
     border: 0;
     border-radius: 15px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     margin-top: 20px;
     font-weight: 600;
     cursor: pointer;
@@ -48,17 +50,11 @@ background-image: linear-gradient(to right, #d62525, #ee5f00);
 
 
 .removetraveler:hover{
-
-background-image: linear-gradient(to right, #d62525, #ee5f00);
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(238, 0, 0, 0.4);
+    color: red;
 }
 
 .addtraveler:hover {
-
-    background-image: linear-gradient(to right, #1be5f0, #00ff9d);
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 238, 138, 0.4);
+    color: blue;
 }
 
 
