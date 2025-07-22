@@ -182,7 +182,7 @@ const handleRemoveTraveler = (index) => {
 
   return (
     <>
-              <div style={{width: 'calc(500px + 50vw)', margin: 'auto'}}>
+              <div style={{width: 'calc(200px + 20vw)', margin: 'auto'}}>
 
             <h1 style={{fontSize: '30px', marginTop: '5vh'}}>United Kingdom Visa </h1>
             <ProgressSteps step={3}/>
