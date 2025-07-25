@@ -1,9 +1,11 @@
 import React from "react";
 import './PhotoSection.css'
+import hero from '../../assets/heroimage_xl.png'
 import TravelForm from "../TravelForm/TravelForm";
 const PhotoSection = () => {
   return (
-    <section className="hero-section">
+<section className="hero-section" style={{ backgroundImage: `url(${hero})` }}>
+
 
       <div className="hero-content">
         <div className="text-container">
