@@ -9,9 +9,13 @@
     position: relative;
 }
 
-input {
-    width: 100%;
+.input-all{
+        width: 100%;
     padding: 14px 20px;
+}
+
+input {
+
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 16px;

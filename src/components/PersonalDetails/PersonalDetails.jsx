@@ -20,6 +20,7 @@ const PersonalDetails = ({ formData, handleSelectChange, title, index }) => {
             required
             label={t.given_name}
             placeholder="John"
+            
             value={formData.personalDetails[index]?.givenName || ""}
             onChange={(val) => handleSelectChange(`personalDetails.givenName`, val.target.value, index)}
           />

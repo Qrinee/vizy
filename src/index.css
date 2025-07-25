@@ -14,8 +14,18 @@ button{
     font-weight: 400;
     letter-spacing: 0.5px;
     font-family: inherit;
-    margin: 5px;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .apply-form-container {
+    flex-direction: column;
+  }
+}
+
+.ReactFlagsSelect-module_selectBtn__19wW7{
+    border-radius: 15px!important;
+    padding: 10px!important;
 }
 
 .addtraveler{

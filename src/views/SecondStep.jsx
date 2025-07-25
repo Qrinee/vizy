@@ -10,6 +10,43 @@ import ESTASummary from './../components/EstaSummary/ESTASummary';
 import ProgressSteps from './../components/ProgressSteps/ProgressSteps';
 
 export default function SecondStep({ formData, setFormData, setStep }) {
+
+
+  // W sekcji stylów komponentu
+const styles = {
+  mobileFooter: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: '16px',
+    background: 'white',
+    boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+    zIndex: 1000,
+    display: 'none', // Domyślnie ukryte
+    '@media (max-width: 768px)': {
+      display: 'block'
+    }
+  },
+  desktopFooter: {
+    margin: 'auto',
+    display: 'block',
+    marginTop: '20px',
+    padding: '12px 24px',
+    backgroundColor: '#1976d2',
+    color: 'black',
+    border: 'none',
+    borderRadius: '20px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    width: '100%',
+    '@media (max-width: 768px)': {
+      display: 'none'
+    }
+  }
+};
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
@@ -287,6 +324,8 @@ const handleRemoveTraveler = (index) => {
             borderRadius: '20px',
             cursor: 'pointer',
             fontSize: '16px',
+            bottom: '0',
+            zIndex: '999',
             fontWeight: 'bold',
             width: '100%'
           }} 

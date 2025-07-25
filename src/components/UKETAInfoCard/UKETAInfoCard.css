@@ -1,11 +1,10 @@
-/* UKETAInfoCard.css */
 :root {
-  --uk-red: #C8102E;
-  --uk-blue: #012169;
-  --uk-light-blue: #E6F2FF;
+  --uk-blue: #0F3D3E;
+  --uk-light-blue: #EFF7F8;
   --uk-dark: #1C1C1C;
-  --uk-light: #F8F9FA;
-  --border-radius: 16px;
+  --uk-light: #ffffff;
+  --highlight: #008080;
+  --border-radius: 20px;
 }
 
 .eta-card {
@@ -13,130 +12,49 @@
   border-radius: var(--border-radius);
   width: 350px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom, #ffffff, var(--uk-light));
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
   background-color: var(--uk-light);
-  border-bottom: 1px solid #e1e8f0;
-}
-
-.badge {
-  background: linear-gradient(135deg, var(--uk-red), #a00d26);
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 6px 14px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
-}
-
-.uk-flag {
-  display: flex;
-  width: 60px;
-  height: 30px;
-  border-radius: 4px;
   overflow: hidden;
-}
-
-.flag-part {
-  flex: 1;
-}
-
-.flag-part.red {
-  background-color: var(--uk-red);
-}
-
-.flag-part.white {
-  background-color: white;
-}
-
-.flag-part.blue {
-  background-color: var(--uk-blue);
-}
-
-.card-content {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   padding: 24px;
-}
-
-.eta-card h2 {
-  margin: 0 0 16px;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--uk-blue);
-  text-align: center;
-  position: relative;
-}
-
-.divider {
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--uk-blue), transparent);
-  margin: 0 auto 24px;
-  width: 80%;
-  opacity: 0.3;
-}
-
-.eta-info {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+
+@media only screen and (max-width: 600px) {
+  .eta-card{
+    width: 100%!important;
+  }
+}
+
+.eta-card h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--uk-blue);
+}
+
+.divider {
+  height: 1px;
+  background-color: #d4dee7;
+  opacity: 0.6;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.eta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .eta-item {
   display: flex;
-  gap: 16px;
   align-items: center;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background-color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 12px;
 }
 
-
-
-.icon-container {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--uk-light-blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.icon {
-  font-size: 24px;
-}
-
-.info-text {
-  flex: 1;
-}
-
-.label {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 4px;
-}
-
-.value {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--uk-dark);
-}
-
-.card-footer {
-  padding: 0 24px 24px;
-  text-align: center;
-}
 
 .apply-btn {
 background-image: linear-gradient(to right, #25CBD6, #00EE8A);
@@ -144,8 +62,9 @@ background-image: linear-gradient(to right, #25CBD6, #00EE8A);
   border: none;
   padding: 14px 32px;
   font-size: 16px;
-  font-weight: 600;
-  border-radius: 50px;
+  font-weight: 800;
+  margin-top: 20px;
+  border-radius: 15px;
   cursor: pointer;
   transition: 0.3s all;
   width: 100%;
@@ -153,11 +72,51 @@ background-image: linear-gradient(to right, #25CBD6, #00EE8A);
 
 }
 
-.apply-btn:hover {
-background-image: linear-gradient(to right, #5bebf5, #3ee09d);
-  transform: translateY(-2px);
+.icon-container {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--uk-light-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.apply-btn:active {
-  transform: translateY(0);
+.icon {
+  color: #0d3138;
+  font-size: 20px;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #9599a0;
+}
+
+.value {
+  font-size: 14px;
+  color: #263746d2;
+  font-weight: 400;
+}
+
+
+.badge {
+  background-color: #0d3138;
+  color: white;
+  font-size: 12px;
+  position: relative;
+  top: 15px;
+  left: 20px;
+  z-index: 99;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 14px;
+  display: inline-block;
+  width: fit-content;
 }

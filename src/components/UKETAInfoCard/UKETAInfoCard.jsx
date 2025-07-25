@@ -1,21 +1,23 @@
 import React from 'react';
 import './UKETAInfoCard.css';
+import { FaCalendarAlt, FaPlaneArrival, FaClock, FaFire } from 'react-icons/fa';
 
 const UKETAInfoCard = ({ valid, entries, onSubmit, loading }) => {
   return (
+    <>
+            <div className="badge"><FaFire/> Most popular</div>
+
     <div className="eta-card">
-      <div className="card-header">
-        <div className="badge">🔥 Most popular</div>
-      </div>
       
       <div className="card-content">
+
         <h2>United Kingdom ETA</h2>
         <div className="divider"></div>
         
         <div className="eta-info">
           <div className="eta-item">
             <div className="icon-container">
-              <span className="icon">📅</span>
+              <FaCalendarAlt className="icon" />
             </div>
             <div className="info-text">
               <div className="label">Valid for</div>
@@ -25,7 +27,7 @@ const UKETAInfoCard = ({ valid, entries, onSubmit, loading }) => {
           
           <div className="eta-item">
             <div className="icon-container">
-              <span className="icon">🛬</span>
+              <FaPlaneArrival className="icon" />
             </div>
             <div className="info-text">
               <div className="label">Number of entries</div>
@@ -35,7 +37,7 @@ const UKETAInfoCard = ({ valid, entries, onSubmit, loading }) => {
           
           <div className="eta-item">
             <div className="icon-container">
-              <span className="icon">⏱️</span>
+              <FaClock className="icon" />
             </div>
             <div className="info-text">
               <div className="label">Max stay</div>
@@ -44,17 +46,12 @@ const UKETAInfoCard = ({ valid, entries, onSubmit, loading }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="card-footer">
-        <button 
-          className="apply-btn" 
-          onClick={onSubmit}
-          disabled={loading}
-        >
-          {loading ? 'Submitting application...' : 'Start your application'}
-        </button>
+        {/* Optional submit button here */}
       </div>
     </div>
+        </>
   );
 };
 

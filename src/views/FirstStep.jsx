@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import CheckBox from '../components/CheckBox/CheckBox';
 import { useLocation } from 'react-router';
-import TwoItemsLayout from './../layouts/Two-Items-Layout/TwoItemsLayout';
 import UKETAInfoCard from '../components/UKETAInfoCard/UKETAInfoCard';
 import ProgressSteps from '../components/ProgressSteps/ProgressSteps';
 
@@ -55,120 +54,175 @@ export default function FirstStep({ formData, setFormData, setStep }) {
     const validationErrors = validateForm();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
-    
+
     setStep(1);
   };
 
   return (
     <>
-    <div style={{width: 'calc(500px + 20vw)', margin: '0 auto'}}>
-      <ProgressSteps step={2}/>
-    </div>
-    <div style={{display: 'flex', margin: 'auto', justifyContent: 'center', flexWrap: 'wrap'}}>
-    
-      <form onSubmit={handleFormSubmit} style={{ padding: '4vw' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>Apply now for your United Kingdom ETA</h1>
-        
-        <div style={{ backgroundColor: '#e9f3ff', padding: '20px', borderRadius: '10px', marginBottom: '20px' }}>
-          <p>
-            {formData.visaRequired ? (
-              <span style={{ backgroundColor: '#cce0ff', color: '#003366', padding: '5px 10px', borderRadius: '6px', fontSize: '13px', fontWeight: 'bold', marginRight: '10px' }}>
-                Visa required
-              </span>
-            ) : (
-              <span style={{ backgroundColor: '#d4f7dc', color: '#0a5c1a', padding: '5px 10px', borderRadius: '6px', fontSize: '13px', fontWeight: 'bold', marginRight: '10px' }}>
-                Visa not required
-              </span>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 16px' }}>
+        <ProgressSteps step={2} />
+      </div>
+
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        margin: '20px auto',
+        gap: '20px',
+        padding: '0 16px',
+        maxWidth: '1200px',
+      }}>
+        <form onSubmit={handleFormSubmit} style={{
+          flex: '1 1 400px',
+          maxWidth: '700px',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}>
+          <h1 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>
+            Apply now for your United Kingdom ETA
+          </h1>
+
+          <div style={{
+            backgroundColor: '#e9f3ff',
+            padding: '20px',
+            borderRadius: '10px',
+            marginBottom: '20px'
+          }}>
+            <p>
+              {formData.visaRequired ? (
+                <span style={{
+                  backgroundColor: '#cce0ff',
+                  color: '#003366',
+                  padding: '5px 10px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  marginRight: '10px'
+                }}>
+                  Visa required
+                </span>
+              ) : (
+                <span style={{
+                  backgroundColor: '#d4f7dc',
+                  color: '#0a5c1a',
+                  padding: '5px 10px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  marginRight: '10px'
+                }}>
+                  Visa not required
+                </span>
+              )}
+              {formData.visaRequired
+                ? `You need a visa to travel to United Kingdom with a ${formData.countryName} passport.`
+                : `You don't need a visa in United Kingdom with a ${formData.countryName} passport.`}
+            </p>
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>
+              What's your nationality?
+            </label>
+            <ReactFlagsSelect
+              selected={formData.nationality}
+              onSelect={handleNationalityChange}
+              searchable={true}
+              placeholder="Select Nationality"
+              className="flag-select"
+              style={{ border: errors.nationality ? '1px solid red' : '1px solid #ccc', padding: '15px', borderRadius: '10px' }}
+            />
+            {errors.nationality && (
+              <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.nationality}</p>
             )}
-            {formData.visaRequired 
-              ? `You need a visa to travel to United Kingdom with a ${formData.countryName} passport.`
-              : `You don't need a visa in United Kingdom with a ${formData.countryName} passport.`}
-          </p>
-        </div>
+          </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>
-            What's your nationality?
-          </label>
-          <ReactFlagsSelect
-            selected={formData.nationality}
-            onSelect={handleNationalityChange}
-            searchable={true}
-            placeholder="Select Nationality"
-            className="flag-select"
-            style={{ border: errors.nationality ? '1px solid red' : '1px solid #ccc' }}
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Applying for</label>
+            <select
+              name="visaType"
+              value={formData.visaType || ''}
+              onChange={handleChange}
+              style={{
+                border: errors.visaType ? '1px solid red' : '1px solid #ccc',
+                borderRadius: '10px',
+                padding: '15px',
+                width: '100%',
+                color: 'black'
+              }}
+            >
+              <option value="">Select visa type</option>
+              <option value="2 years">United Kingdom ETA - 2 years, Multiple entry</option>
+              <option value="5 years">United Kingdom ETA - 5 years, Multiple entry</option>
+            </select>
+            {errors.visaType && (
+              <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.visaType}</p>
+            )}
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Arrival date</label>
+            <input
+              type="date"
+              name="arrivalDate"
+              value={formData.arrivalDate || ''}
+              onChange={handleChange}
+              style={{
+                fontFamily: 'inherit',
+                border: errors.arrivalDate ? '1px solid red' : '1px solid #ccc',
+                borderRadius: '10px',
+                padding: '15px',
+                width: 'calc(100% - 30px)',
+              }}
+            />
+            {errors.arrivalDate && (
+              <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.arrivalDate}</p>
+            )}
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <CheckBox
+              name="acceptation"
+              checked={formData.acceptation || false}
+              onChange={handleChange}
+              label="I agree to the Terms and Conditions and Privacy Policy"
+            />
+            {errors.acceptation && (
+              <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.acceptation}</p>
+            )}
+          </div>
+
+          {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '15px' }}>{error}</p>}
+        </form>
+
+        <div>
+          <UKETAInfoCard
+            valid={formData.visaType}
+            onSubmit={handleFormSubmit}
+            loading={loading}
           />
-          {errors.nationality && (
-            <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.nationality}</p>
-          )}
-        </div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Applying for</label>
-          <select
-            name="visaType"
-            value={formData.visaType || ''}
-            onChange={handleChange}
-            style={{ 
-              border: errors.visaType ? '1px solid red' : '1px solid #ccc',
-              borderRadius: '6px',
-              padding: '10px',
+          <button
+            className="apply-btn"
+            onClick={handleFormSubmit}
+            disabled={loading}
+            style={{
+              marginTop: '20px',
               width: '100%',
-              color: 'black'
+              padding: '12px',
+              
+              fontSize: '16px',
+              borderRadius: '10px',
+              backgroundColor: '#007aff',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
-            <option value="">Select visa type</option>
-            <option value="2 years">United Kingdom ETA - 2 years, Multiple entry</option>
-            <option value="5 years">United Kingdom ETA - 5 years, Multiple entry</option>
-          </select>
-          {errors.visaType && (
-            <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.visaType}</p>
-          )}
+            {loading ? 'Submitting application...' : 'Start your application'}
+          </button>
         </div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Arrival date</label>
-          <input 
-            type="date" 
-            name="arrivalDate"
-            value={formData.arrivalDate || ''}
-            onChange={handleChange}
-            style={{ 
-              fontFamily: 'inherit',
-              border: errors.arrivalDate ? '1px solid red' : '1px solid #ccc',
-              borderRadius: '6px',
-              padding: '10px',
-              width: '100%'
-            }}
-          />
-          {errors.arrivalDate && (
-            <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.arrivalDate}</p>
-          )}
-        </div>
-
-        <div style={{ marginBottom: '20px' }}>
-          <CheckBox
-            name="acceptation"
-            checked={formData.acceptation || false}
-            onChange={handleChange}
-            label="I agree to the Terms and Conditions and Privacy Policy"
-          />
-          {errors.acceptation && (
-            <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.acceptation}</p>
-          )}
-        </div>
-
-        {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '15px' }}>{error}</p>}
-      </form>
-      
-      <div style={{margin: '20px'}}>
-        <UKETAInfoCard 
-          valid={formData.visaType}
-          onSubmit={handleFormSubmit}
-          loading={loading}
-        />
       </div>
-    </div>
     </>
   );
 }
