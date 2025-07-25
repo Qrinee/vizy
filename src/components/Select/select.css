@@ -1,7 +1,11 @@
 .select{
-    color: black!important;
+    color: black;
     width: 100%;
     padding: 14px 15px;
     border-radius: 16px;
     border: 1px solid rgb(190, 190, 190);
+}
+
+.select.placeholder-selected {
+  color: #7a7a7a;
 }

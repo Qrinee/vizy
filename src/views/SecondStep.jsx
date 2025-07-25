@@ -14,41 +14,6 @@ import { FaArrowLeft } from "react-icons/fa";
 export default function SecondStep({ formData, setFormData, setStep }) {
 
 
-  // W sekcji stylów komponentu
-const styles = {
-  mobileFooter: {
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: '16px',
-    background: 'white',
-    boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
-    zIndex: 1000,
-    display: 'none', // Domyślnie ukryte
-    '@media (max-width: 768px)': {
-      display: 'block'
-    }
-  },
-  desktopFooter: {
-    margin: 'auto',
-    display: 'block',
-    marginTop: '20px',
-    padding: '12px 24px',
-    backgroundColor: '#1976d2',
-    color: 'black',
-    border: 'none',
-    borderRadius: '20px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    width: '100%',
-    '@media (max-width: 768px)': {
-      display: 'none'
-    }
-  }
-};
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
@@ -341,7 +306,7 @@ const handleRemoveTraveler = (index) => {
         <p style={{color: 'rgb(11 57 71)'}}><FaPerson/> We take strong measures to protect your information</p>
         <p style={{fontWeight: '500', margin: '0'}}>For more details see how we keep your data safe</p>
         </div>
-        <div style={{marginTop: '30px', paddingLeft: '10px', color: 'rgb(57, 79, 225)'}}>
+        <div onClick={() => setStep(0)} style={{marginTop: '30px', cursor: 'pointer', paddingLeft: '10px', color: 'rgb(57, 79, 225)'}}>
           <FaArrowLeft style={{marginBottom: '-2px', marginRight: '5px'}}/> Previous
         </div>
       </div>

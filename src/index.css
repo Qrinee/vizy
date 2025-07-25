@@ -17,6 +17,11 @@ button{
     cursor: pointer;
 }
 
+.select option[disabled] {
+  color: #ccc; /* Light gray (brighter) */
+}
+
+
 @media (max-width: 768px) {
   .apply-form-container {
     flex-direction: column;
@@ -100,8 +105,7 @@ h3{
 
 select{
     padding: 5px 10px;
-    color: white;
-    font-size: Arial;
+    font-size: inherit;
     background: none;
     border-radius: 5px;
     font-family: inherit;

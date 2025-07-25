@@ -14,6 +14,11 @@
     padding: 14px 20px;
 }
 
+select option[disabled] {
+  color: #ccc!important; /* Light gray (brighter) */
+}
+
+
 input {
 
     font-size: 16px;

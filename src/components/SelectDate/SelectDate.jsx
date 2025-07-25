@@ -26,16 +26,19 @@ export default function SelectDate({
       <div className="select-date">
         <Select
           value={day}
+          placeholder={'Day'}
           onChange={(e) => handleChange(e.target.value, month, year)}
           options={[...Array(31).keys()].map((i) => (i + 1).toString())}
         />
         <Select
           value={month}
+          placeholder={'Month'}
           onChange={(e) => handleChange(day, e.target.value, year)}
           options={["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
         />
         <Select
           value={year}
+          placeholder={'Year'}
           onChange={(e) => handleChange(day, month, e.target.value)}
           options={[...Array(new Date().getFullYear() - 1899).keys()].map((i) => (1900 + i).toString())}
         />

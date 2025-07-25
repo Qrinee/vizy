@@ -22,22 +22,20 @@ export default function Select({
         ) : null}
         <div className="input-container">
           {left}
-          <select
-            className="select"
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange} 
-          >
-            <option value="" disabled>
-              {placeholder}
-            </option>
-            {options &&
-              options.map((e, index) => (
-                <option key={index} value={e}>
-                  {e}
-                </option>
-              ))}
-          </select>
+<select
+  className={`select ${value === "" ? "placeholder-selected" : ""}`}
+  value={value}
+  onChange={onChange}
+>
+  <option value="" disabled>
+    {placeholder}
+  </option>
+  {options.map((e, index) => (
+    <option key={index} value={e}>
+      {e}
+    </option>
+  ))}
+</select>
           {question ? (
             <div className="question-container">
               <button className="question-mark">?</button>
