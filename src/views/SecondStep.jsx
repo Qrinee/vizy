@@ -310,6 +310,7 @@ const handleRemoveTraveler = (index) => {
       </div>
       <div style={{margin: '20px', width: '350px'}}>
         <ESTASummary traveler={formData.numberOfTravelers || 1} total={'100 USD'}/>
+        <div className="mobile-down">
                 <button 
           style={{
             margin: 'auto', 
@@ -333,6 +334,7 @@ const handleRemoveTraveler = (index) => {
         >
           {loading ? t.submitting : "Save and continue"}
         </button>
+        </div>
       </div>
       </div>
 
