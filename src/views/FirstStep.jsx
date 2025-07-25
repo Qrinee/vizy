@@ -202,6 +202,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
             onSubmit={handleFormSubmit}
             loading={loading}
           />
+          <div className='mobile-down'>
           <button
             className="apply-btn"
             onClick={handleFormSubmit}
@@ -213,7 +214,6 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               
               fontSize: '16px',
               borderRadius: '10px',
-              backgroundColor: '#007aff',
               color: 'white',
               border: 'none',
               cursor: 'pointer'
@@ -221,6 +221,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
           >
             {loading ? 'Submitting application...' : 'Start your application'}
           </button>
+          </div>
         </div>
       </div>
     </>
