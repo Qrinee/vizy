@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import CheckBox from '../components/CheckBox/CheckBox';
 import { useLocation } from 'react-router';
+import trustpilot from '../assets/hehe.png'
 import UKETAInfoCard from '../components/UKETAInfoCard/UKETAInfoCard';
 import ProgressSteps from '../components/ProgressSteps/ProgressSteps';
 
@@ -194,6 +195,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
           </div>
 
           {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '15px' }}>{error}</p>}
+            <img src={trustpilot} />
         </form>
 
         <div>
@@ -214,7 +216,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               
               fontSize: '16px',
               borderRadius: '10px',
-              color: 'white',
+              color: 'black',
               border: 'none',
               cursor: 'pointer'
             }}

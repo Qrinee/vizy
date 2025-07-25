@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './TravelForm.css';
 import { useNavigate } from 'react-router';
 import ReactFlagsSelect from 'react-flags-select';
+import { FaArrowRight } from 'react-icons/fa';
 
 const TravelForm = () => {
   const [fromCountry, setFromCountry] = useState('');
@@ -76,7 +77,7 @@ const TravelForm = () => {
   return (
       <div className="travel-form-card">
         <div className="form-header">
-          <h1>Plan Your Journey</h1>
+          <h1 style={{color: 'rgb(11 57 71)'}}>Plan Your Journey</h1>
           <p>Select your departure and destination countries</p>
         </div>
         
@@ -128,7 +129,7 @@ const TravelForm = () => {
               <div className="spinner"></div>
             ) : (
               <>
-                Get started! <i className="fas fa-arrow-right"></i>
+                Get started! <FaArrowRight/>
               </>
             )}
           </button>

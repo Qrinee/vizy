@@ -10,7 +10,7 @@
 }
 
 .travel-form-card {
-  background: rgba(255, 255, 255, 0.925);
+  background: rgba(242, 247, 248, 0.938);
   border-radius: 15px;
   width: 100%;
   max-width: 60vw;
@@ -172,7 +172,7 @@
 
 .submit-btn {
   background: linear-gradient(to right, #25CBD6, #00EE8A);
-  color: white;
+  color: black;
   border: none;
   padding: 0 30px;
   border-radius: 10px;

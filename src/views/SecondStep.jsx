@@ -8,6 +8,8 @@ import { useLanguage } from "../context/LanguageContext";
 import UKETAInfoCard from "../components/UKETAInfoCard/UKETAInfoCard";
 import ESTASummary from './../components/EstaSummary/ESTASummary';
 import ProgressSteps from './../components/ProgressSteps/ProgressSteps';
+import { FaPerson } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function SecondStep({ formData, setFormData, setStep }) {
 
@@ -334,6 +336,13 @@ const handleRemoveTraveler = (index) => {
         >
           {loading ? t.submitting : "Save and continue"}
         </button>
+        </div>
+        <div style={{marginTop: '20px', paddingLeft: '10px'}}>
+        <p style={{color: 'rgb(11 57 71)'}}><FaPerson/> We take strong measures to protect your information</p>
+        <p style={{fontWeight: '500', margin: '0'}}>For more details see how we keep your data safe</p>
+        </div>
+        <div style={{marginTop: '30px', paddingLeft: '10px', color: 'rgb(57, 79, 225)'}}>
+          <FaArrowLeft style={{marginBottom: '-2px', marginRight: '5px'}}/> Previous
         </div>
       </div>
       </div>
