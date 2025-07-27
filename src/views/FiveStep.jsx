@@ -26,13 +26,6 @@ export default function FiveStep({ formData, setFormData, setStep }) {
       errors.push("At least one traveler is required.");
     }
 
-    // Walidacja danych każdego podróżnego
-    formData.personalDetails.forEach((pax, index) => {
-      if (!pax.givenName) errors.push(`Traveler ${index + 1}: First name is required.`);
-      if (!pax.surName) errors.push(`Traveler ${index + 1}: Last name is required.`);
-      if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
-    });
-
     return errors;
   };
 
@@ -231,7 +224,7 @@ export default function FiveStep({ formData, setFormData, setStep }) {
                 fontWeight: 'bold',
                 width: '100%'
               }} 
-              onClick={() => setStep(2)} 
+              onClick={handleContinue} 
               disabled={loading} 
               className='submit-btn'
             >

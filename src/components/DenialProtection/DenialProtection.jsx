@@ -17,7 +17,7 @@ export default function DenialProtection() {
             <p style={{color: 'rgb(57 79 225'}}>Learn more</p>
         </div>
         <div style={{display: 'flex', alignItems: 'center', margin: '20px'}}>
-            <CheckBox checked={chk} onChange={() => setChk(!chk)} />
+            <CheckBox checked={chk}  />
         </div>
     </div>
   )
