@@ -12,51 +12,67 @@ import CheckBox from "../CheckBox/CheckBox";
 import ToggleRadio from "./ToggleRadio/ToggleRadio";
 
 const PassportDetails = ({ formData, handleSelectChange, title, index }) => {
-  const { t } = useLanguage();
   const passportData = formData.passportDetails[index] || {};
-  const [chk, setChk] = useState(false)
-  const [selected, setSelected] = useState('yes')
-
+  
   return (
     <InfoBox title={title}>
-      <p>Nationality on passport</p>
-       <div className="input">
-                 <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>
-              What's your nationality?
-            </label>
-                <ReactFlagsSelect  
-                searchable
-                
-                />
-</div>
-       <div className="input">
-                <CheckBox checked={chk} onChange={() => setChk(!chk)} label={'Add passport details later'} value={formData.personalDetails[index]?.surName || ""}/> 
-</div>
-{
-  !chk ? (
-    <>
-      <Input label={'Passport number'} />
-      <SelectDate label={'Passport expiration date'} />
-    </>
-  ) : <></>
-}
+      <div className="input">
+        <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>
+          Nationality on passport
+        </label>
+        <ReactFlagsSelect
+          selected={passportData.nationality || ""}
+          onSelect={(code) => handleSelectChange(`passportDetails.nationality`, code, index)}
+          searchable
+        />
+      </div>
+      
+      <div className="input">
+        <CheckBox 
+          checked={passportData.addLater || false}
+          onChange={() => handleSelectChange(`passportDetails.addLater`, !passportData.addLater, index)}
+          label={'Add passport details later'}
+        />
+      </div>
+      
+      {!passportData.addLater && (
+        <>
+          <Input 
+            label={'Passport number'}
+            value={passportData.passportNumber || ""}
+            onChange={(e) => handleSelectChange(`passportDetails.passportNumber`, e.target.value, index)}
+          />
+          
+          <SelectDate 
+            label={'Passport expiration date'}
+            value={passportData.passportExpirationDate || ""}
+            onChange={(val) => handleSelectChange(`passportDetails.passportExpirationDate`, val, index)}
+          />
+        </>
+      )}
 
-                  <div className="input">
-                <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500'}}>Do you have another nationality?</label>
-                <ToggleRadio selected={selected} setSelected={setSelected}/>
-                </div>
-                {
-                  selected == 'yes' ? (
-                <div className="input">
-                <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500'}}>Other nationality</label>
-      <ReactFlagsSelect  
-                searchable
-                
-                />
-                </div>
-                  ) : <></>
-                }
-
+      <div className="input">
+        <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500'}}>
+          Do you have another nationality?
+        </label>
+        <ToggleRadio 
+          selected={passportData.anotherNationalityExists || 'no'}
+          setSelected={(val) => handleSelectChange(`passportDetails.anotherNationalityExists`, val, index)}
+        />
+      </div>
+      
+      {passportData.anotherNationalityExists === 'yes' && (
+        <div className="input">
+          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500'}}>
+            Other nationality
+          </label>
+          <ReactFlagsSelect
+            selected={passportData.anotherNationality || ""}
+            onSelect={(code) => handleSelectChange(`passportDetails.anotherNationality`, code, index)}
+            searchable
+          />
+        </div>
+      )}
     </InfoBox>
   );
 };

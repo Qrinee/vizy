@@ -14,135 +14,76 @@ export default function ThirdStep({ formData, setFormData, setStep }) {
   const [validationErrors, setValidationErrors] = useState([]);
   const { t } = useLanguage();
 
+
   const validateFormData = () => {
     const errors = [];
-
-    // Walidacja liczby podróżnych
-    if (!formData.numberOfTravelers || formData.numberOfTravelers < 1) {
-      errors.push("At least one traveler is required.");
-    }
-
-    // Walidacja danych każdego podróżnego
-    formData.personalDetails.forEach((pax, index) => {
-      if (!pax.givenName) errors.push(`Traveler ${index + 1}: First name is required.`);
-      if (!pax.surName) errors.push(`Traveler ${index + 1}: Last name is required.`);
-      if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
+    
+    formData.passportDetails.forEach((passport, index) => {
+      if (!passport.nationality) {
+        errors.push(`Traveler ${index + 1}: Nationality is required`);
+      }
+      
+      if (!passport.addLater) {
+        if (!passport.passportNumber) {
+          errors.push(`Traveler ${index + 1}: Passport number is required`);
+        }
+        if (!passport.passportExpirationDate) {
+          errors.push(`Traveler ${index + 1}: Passport expiration date is required`);
+        }
+      }
+      
+      if (passport.anotherNationalityExists === 'yes' && !passport.anotherNationality) {
+        errors.push(`Traveler ${index + 1}: Other nationality is required`);
+      }
     });
-
+    
     return errors;
   };
 
-  const handleSelectChange = (key, value, index = 0) => {
-    setFormData((prev) => {
-      let newFormData = { ...prev };
-
-      if (key.startsWith("personalDetails")) {
-        const [_, field] = key.split(".");
-        newFormData.personalDetails = [...prev.personalDetails];
-        newFormData.personalDetails[index][field] = value;
-      } else {
-        newFormData[key] = value;
-      }
-
-      if (key === "numberOfTravelers") {
-        const numberOfTravelers = parseInt(value, 10);
-        
-        if (isNaN(numberOfTravelers)) {
-          newFormData.numberOfTravelers = prev.numberOfTravelers;
-          return newFormData;
-        }
-
-        newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
-          newFormData.personalDetails[i] || {
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-          }
-        );
-        
-        newFormData.numberOfTravelers = numberOfTravelers;
-      }
-
-      return newFormData;
-    });
-  };
-
-  const handleAddTraveler = () => {
-    setFormData(prev => {
-      const currentNumberOfTravelers = parseInt(prev.numberOfTravelers, 10) || 0;
-      const newNumberOfTravelers = currentNumberOfTravelers + 1;
-      
-      return {
-        ...prev,
-        numberOfTravelers: newNumberOfTravelers,
-        personalDetails: [
-          ...prev.personalDetails,
-          {
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-          }
-        ]
-      };
-    });
-  };
-
-  const handleRemoveTraveler = (index) => {
-    const currentNumberOfTravelers = parseInt(formData.numberOfTravelers, 10) || 0;
-    if (currentNumberOfTravelers <= 1) return;
-    
-    setFormData(prev => {
-      const newPersonalDetails = [...prev.personalDetails];
-      newPersonalDetails.splice(index, 1);
-
-      return {
-        ...prev,
-        numberOfTravelers: currentNumberOfTravelers - 1,
-        personalDetails: newPersonalDetails
-      };
-    });
-  };
-
-  const handleContinue = async () => {
-    setError(null);
-    setValidationErrors([]);
+    const handleContinue = (e) => {
+    e.preventDefault();
     const errors = validateFormData();
-
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      console.log("FORM DATA:", JSON.stringify(formData));
-      const response = await fetch("https://api.govguide.co/api/application", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Stripe session URL not received.");
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    setValidationErrors(errors);
+    
+    if (errors.length === 0) {
+      setStep(3); // Proceed to next step
     }
   };
+
+const handleSelectChange = (key, value, index = 0) => {
+  setFormData((prev) => {
+    const newFormData = { ...prev };
+    
+    // Handle passportDetails updates
+    if (key.startsWith("passportDetails")) {
+      const [_, field] = key.split(".");
+      
+      // Ensure passportDetails array exists
+      newFormData.passportDetails = [...(prev.passportDetails || [])];
+      
+      // Initialize object if needed
+      if (!newFormData.passportDetails[index]) {
+        newFormData.passportDetails[index] = {};
+      }
+      
+      // Update the specific field
+      newFormData.passportDetails[index] = {
+        ...newFormData.passportDetails[index],
+        [field]: value
+      };
+    } 
+    // Handle other updates (if any)
+    else {
+      newFormData[key] = value;
+    }
+    
+    return newFormData;
+  });
+};
+
+
+
+
 
   return (
     <>
@@ -231,7 +172,7 @@ export default function ThirdStep({ formData, setFormData, setStep }) {
                 fontWeight: 'bold',
                 width: '100%'
               }} 
-              onClick={() => setStep(3)} 
+              onClick={handleContinue} 
               disabled={loading} 
               className='submit-btn'
             >

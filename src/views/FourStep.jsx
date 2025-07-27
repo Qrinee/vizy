@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PersonalDetails from "../components/PersonalDetails/PersonalDetails";
 import { useLanguage } from "../context/LanguageContext";
 import ESTASummary from './../components/EstaSummary/ESTASummary';
@@ -14,6 +14,15 @@ export default function FourStep({ formData, setFormData, setStep }) {
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
   const { t } = useLanguage();
+  const selected = formData.processingTime || 1;
+
+  // Update form data when processing time changes
+  const handleProcessingTimeChange = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      processingTime: id
+    }));
+  };
 
   const validateFormData = () => {
     const errors = [];
@@ -23,128 +32,24 @@ export default function FourStep({ formData, setFormData, setStep }) {
       errors.push("At least one traveler is required.");
     }
 
-    // Walidacja danych każdego podróżnego
-    formData.personalDetails.forEach((pax, index) => {
-      if (!pax.givenName) errors.push(`Traveler ${index + 1}: First name is required.`);
-      if (!pax.surName) errors.push(`Traveler ${index + 1}: Last name is required.`);
-      if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
-    });
 
     return errors;
   };
 
-  const handleSelectChange = (key, value, index = 0) => {
-    setFormData((prev) => {
-      let newFormData = { ...prev };
-
-      if (key.startsWith("personalDetails")) {
-        const [_, field] = key.split(".");
-        newFormData.personalDetails = [...prev.personalDetails];
-        newFormData.personalDetails[index][field] = value;
-      } else {
-        newFormData[key] = value;
-      }
-
-      if (key === "numberOfTravelers") {
-        const numberOfTravelers = parseInt(value, 10);
-        
-        if (isNaN(numberOfTravelers)) {
-          newFormData.numberOfTravelers = prev.numberOfTravelers;
-          return newFormData;
-        }
-
-        newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
-          newFormData.personalDetails[i] || {
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-          }
-        );
-        
-        newFormData.numberOfTravelers = numberOfTravelers;
-      }
-
-      return newFormData;
-    });
-  };
-
-  const handleAddTraveler = () => {
-    setFormData(prev => {
-      const currentNumberOfTravelers = parseInt(prev.numberOfTravelers, 10) || 0;
-      const newNumberOfTravelers = currentNumberOfTravelers + 1;
-      
-      return {
-        ...prev,
-        numberOfTravelers: newNumberOfTravelers,
-        personalDetails: [
-          ...prev.personalDetails,
-          {
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-          }
-        ]
-      };
-    });
-  };
-
-  const handleRemoveTraveler = (index) => {
-    const currentNumberOfTravelers = parseInt(formData.numberOfTravelers, 10) || 0;
-    if (currentNumberOfTravelers <= 1) return;
-    
-    setFormData(prev => {
-      const newPersonalDetails = [...prev.personalDetails];
-      newPersonalDetails.splice(index, 1);
-
-      return {
-        ...prev,
-        numberOfTravelers: currentNumberOfTravelers - 1,
-        personalDetails: newPersonalDetails
-      };
-    });
-  };
-
-  const handleContinue = async () => {
+  const handleContinue = async (e) => {
+    e.preventDefault();
     setError(null);
     setValidationErrors([]);
+    
     const errors = validateFormData();
-
     if (errors.length > 0) {
       setValidationErrors(errors);
       return;
     }
 
     setLoading(true);
-    try {
-      console.log("FORM DATA:", JSON.stringify(formData));
-      const response = await fetch("https://api.govguide.co/api/application", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Stripe session URL not received.");
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+    setStep(4)
+}
   return (
     <>
       <div style={{maxWidth: '1312px', margin: 'auto'}}>
@@ -157,7 +62,8 @@ export default function FourStep({ formData, setFormData, setStep }) {
             
             {formData.personalDetails.map((_, index) => (
               <div key={index} className="traveler-section" style={{ position: "relative" }}>
-                    <ProcessingOptions/>
+                    <ProcessingOptions               selected={selected} 
+              setSelected={handleProcessingTimeChange}  />
 
               </div>
             ))}
@@ -226,7 +132,7 @@ export default function FourStep({ formData, setFormData, setStep }) {
                 fontWeight: 'bold',
                 width: '100%'
               }} 
-              onClick={() => setStep(4)} 
+                onClick={handleContinue} 
               disabled={loading} 
               className='submit-btn'
             >

@@ -1,7 +1,7 @@
 import React from 'react';
 import './ESTASummary.css';
 
-const ESTASummary = ({total, traveler}) => {
+const ESTASummary = ({total, traveler, price}) => {
   return (
     <div className="container">
       <div className="summary-box">
@@ -16,7 +16,8 @@ const ESTASummary = ({total, traveler}) => {
       </div>
       <div className="footer">
         <span className="total-label">Total</span>
-        <span className="checkout">Calculated at checkout</span>
+        {price ? <>{price}</> : <span className="checkout">Calculated at checkout</span>}
+        
       </div>
     </div>
   );

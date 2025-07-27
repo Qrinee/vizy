@@ -12,80 +12,84 @@ export default function SecondStep({ formData, setFormData, setStep }) {
   const [validationErrors, setValidationErrors] = useState([]);
   const { t } = useLanguage();
 
-  const validateFormData = () => {
-    const errors = [];
-
-    // Walidacja liczby podróżnych
-    if (!formData.numberOfTravelers || formData.numberOfTravelers < 1) {
-      errors.push("At least one traveler is required.");
-    }
-
-    // Walidacja danych każdego podróżnego
-    formData.personalDetails.forEach((pax, index) => {
-      if (!pax.givenName) errors.push(`Traveler ${index + 1}: First name is required.`);
-      if (!pax.surName) errors.push(`Traveler ${index + 1}: Last name is required.`);
-      if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
-    });
-
-    return errors;
-  };
-
-  const handleSelectChange = (key, value, index = 0) => {
-    setFormData((prev) => {
-      let newFormData = { ...prev };
-
-      if (key.startsWith("personalDetails")) {
-        const [_, field] = key.split(".");
-        newFormData.personalDetails = [...prev.personalDetails];
-        newFormData.personalDetails[index][field] = value;
-      } else {
-        newFormData[key] = value;
-      }
-
-      if (key === "numberOfTravelers") {
-        const numberOfTravelers = parseInt(value, 10);
-        
-        if (isNaN(numberOfTravelers)) {
-          newFormData.numberOfTravelers = prev.numberOfTravelers;
-          return newFormData;
-        }
-
-        newFormData.personalDetails = Array.from({ length: numberOfTravelers }, (_, i) =>
-          newFormData.personalDetails[i] || {
-            givenName: "",
-            middleName: "",
-            surName: "",
+const handleSelectChange = (key, value, index = 0) => {
+  setFormData((prev) => {
+    const newFormData = JSON.parse(JSON.stringify(prev));
+    
+    if (key.includes("personalDetails")) {
+      const [_, field] = key.split(".");
+      newFormData.personalDetails[index][field] = value;
+    } 
+    else if (key === "numberOfTravelers") {
+      const numberOfTravelers = parseInt(value, 10);
+      
+      if (!isNaN(numberOfTravelers)) {
+        newFormData.personalDetails = Array.from(
+          { length: numberOfTravelers },
+          (_, i) => newFormData.personalDetails[i] || {
+            firstAndMiddleName: "",
+            lastName: "",
             dateOfBirth: "",
           }
         );
-        
-        newFormData.numberOfTravelers = numberOfTravelers;
+        newFormData.numberOfTravelers = numberOfTravelers.toString();
       }
+    } 
+    else {
+      newFormData[key] = value;
+    }
 
-      return newFormData;
-    });
-  };
+    return newFormData;
+  });
+};
 
-  const handleAddTraveler = () => {
-    setFormData(prev => {
-      const currentNumberOfTravelers = parseInt(prev.numberOfTravelers, 10) || 0;
-      const newNumberOfTravelers = currentNumberOfTravelers + 1;
-      
-      return {
-        ...prev,
-        numberOfTravelers: newNumberOfTravelers,
-        personalDetails: [
-          ...prev.personalDetails,
-          {
-            givenName: "",
-            middleName: "",
-            surName: "",
-            dateOfBirth: "",
-          }
-        ]
-      };
-    });
-  };
+const handleContinue = async (e) => {
+  e.preventDefault(); // Prevent default form submission behavior
+  
+  // Validate the form
+  const errors = validateFormData();
+  
+  if (errors.length > 0) {
+    setValidationErrors(errors);
+    return; // Stop if there are errors
+  }
+
+  setLoading(true);
+  try {
+    console.log("Valid form data:", formData);
+    // Proceed to next step if validation passes
+    setStep(2); // Or whatever your next step number is
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleAddTraveler = () => {
+  setFormData(prev => ({
+    ...prev,
+    numberOfTravelers: (parseInt(prev.numberOfTravelers, 10) + 1).toString(),
+    personalDetails: [
+      ...prev.personalDetails,
+      {
+        firstAndMiddleName: "",
+        lastName: "",
+        dateOfBirth: "",
+      }
+    ]
+  }));
+};
+
+const validateFormData = () => {
+  const errors = [];
+  formData.personalDetails.forEach((pax, index) => {
+    if (!pax.firstAndMiddleName) errors.push(`Traveler ${index + 1}: First name is required.`);
+    if (!pax.lastName) errors.push(`Traveler ${index + 1}: Last name is required.`);
+    if (!pax.dateOfBirth) errors.push(`Traveler ${index + 1}: Date of birth is required.`);
+  });
+  return errors;
+};
 
   const handleRemoveTraveler = (index) => {
     const currentNumberOfTravelers = parseInt(formData.numberOfTravelers, 10) || 0;
@@ -103,44 +107,6 @@ export default function SecondStep({ formData, setFormData, setStep }) {
     });
   };
 
-  const handleContinue = async () => {
-    setError(null);
-    setValidationErrors([]);
-    const errors = validateFormData();
-
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      console.log("FORM DATA:", JSON.stringify(formData));
-      const response = await fetch("https://api.govguide.co/api/application", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit application");
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Stripe session URL not received.");
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <>
@@ -245,7 +211,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
                 fontWeight: 'bold',
                 width: '100%'
               }} 
-              onClick={() => setStep(2)} 
+              onClick={(e) => handleContinue(e)} 
               disabled={loading} 
               className='submit-btn'
             >

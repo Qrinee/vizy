@@ -14,15 +14,10 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   const location = useLocation();
   const { fromCountry } = location.state || {};
 
-  const isVisaRequired = (countryCode) => countryCode !== 'GB';
-
   const handleNationalityChange = (countryCode) => {
-    const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(countryCode);
     setFormData(prev => ({
       ...prev,
       nationality: countryCode,
-      countryName: countryName || countryCode,
-      visaRequired: isVisaRequired(countryCode),
     }));
   };
 
@@ -47,7 +42,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.nationality) newErrors.nationality = 'Nationality is required';
-    if (!formData.visaType) newErrors.visaType = 'Visa type is required';
+    if (!formData.documentType) newErrors.visaType = 'Visa type is required';
     return newErrors;
   };
 
@@ -90,7 +85,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
             marginBottom: '20px'
           }}>
             <p>
-              {formData.visaRequired ? (
+
                 <span style={{
                   backgroundColor: '#cce0ff',
                   color: '#003366',
@@ -102,22 +97,8 @@ export default function FirstStep({ formData, setFormData, setStep }) {
                 }}>
                   Visa required
                 </span>
-              ) : (
-                <span style={{
-                  backgroundColor: '#d4f7dc',
-                  color: '#0a5c1a',
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  marginRight: '10px'
-                }}>
-                  Visa not required
-                </span>
-              )}
-              {formData.visaRequired
-                ? `You need a visa to travel to United Kingdom with a ${formData.countryName} passport.`
-                : `You don't need a visa in United Kingdom with a ${formData.countryName} passport.`}
+
+              You need a visa to travel to United Kingdom with a {formData.countryName} passport.
             </p>
           </div>
 
@@ -142,8 +123,8 @@ export default function FirstStep({ formData, setFormData, setStep }) {
           <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500' }}>Applying for</label>
             <select
-              name="visaType"
-              value={formData.visaType || ''}
+              name="documentType"
+              value={formData.documentType || ''}
               onChange={handleChange}
               style={{
                 border: errors.visaType ? '1px solid red' : '1px solid #ccc',
@@ -200,7 +181,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
 
         <div>
           <UKETAInfoCard
-            valid={formData.visaType}
+            valid={formData.documentType}
             onSubmit={handleFormSubmit}
             loading={loading}
           />

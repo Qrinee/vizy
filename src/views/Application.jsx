@@ -9,39 +9,29 @@ import FiveStep from './FiveStep';
 export default function Application() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    contactName: "",
-    phoneNumber: "",
-    emailAddress: "",
-    confirmEmail: "",
-    trueInformation: false,
-    acceptation: false,
-    countryCode: "",
+        documentType: "",
+processingTime: 1,
     numberOfTravelers: "1",
-    personalDetails: [
-      {
-        gender: "",
-        givenName: "",
-        middleName: "",
-        surName: "",
-        dateOfBirth: "",
-        countryOfBirth: "",
-        nationality: "",
-      },
-    ],
+    nationality: "",
+    arrivalDate: "",
     passportDetails: [
       {
-        selectedOption: "",
-        passportIssuingCountry: "",
-        passportNumber: "",
-        passportInssuranceDate: "",
-        passportExpirationDate: "",
+      nationality: "",
+      addLater: false,
+      passportNumber: "",
+      passportExpirationDate: "",
+      anotherNationalityExists: "no",
+      anotherNationality: ""
+      },
+    ],    
+    personalDetails: [
+      {
+        firstAndMiddleName: "",
+        lastName: "",
+        dateOfBirth: "",
       },
     ],
-    documentType: "",
-    billingCountry: "",
-    address: "",
-    postalCode: "",
-    city: "",
+
   });
 
   useEffect(() => {
