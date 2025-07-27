@@ -9,6 +9,7 @@ import ProgressSteps from '../components/ProgressSteps/ProgressSteps';
 export default function FirstStep({ formData, setFormData, setStep }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [IdontHave, setIdontHave] = useState(false)
   const [error, setError] = useState(null);
   const location = useLocation();
   const { fromCountry } = location.state || {};
@@ -41,12 +42,12 @@ export default function FirstStep({ formData, setFormData, setStep }) {
     }));
   };
 
+
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.nationality) newErrors.nationality = 'Nationality is required';
     if (!formData.visaType) newErrors.visaType = 'Visa type is required';
-    if (!formData.arrivalDate) newErrors.arrivalDate = 'Arrival date is required';
-    if (!formData.acceptation) newErrors.acceptation = 'You must accept the terms';
     return newErrors;
   };
 
@@ -72,12 +73,10 @@ export default function FirstStep({ formData, setFormData, setStep }) {
         margin: '20px auto',
         gap: '20px',
         padding: '0 16px',
-        maxWidth: '1200px',
+        maxWidth: '1312px'
       }}>
         <form onSubmit={handleFormSubmit} style={{
           flex: '1 1 400px',
-          maxWidth: '700px',
-          width: '100%',
           boxSizing: 'border-box',
         }}>
           <h1 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>
@@ -134,6 +133,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               className="flag-select"
               style={{ border: errors.nationality ? '1px solid red' : '1px solid #ccc', padding: '15px', borderRadius: '10px' }}
             />
+            <p style={{fontWeight: '300'}}>Ensure you select the nationality of the passport you'll be traveling with</p>
             {errors.nationality && (
               <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.nationality}</p>
             )}
@@ -155,7 +155,6 @@ export default function FirstStep({ formData, setFormData, setStep }) {
             >
               <option value="">Select visa type</option>
               <option value="2 years">United Kingdom ETA - 2 years, Multiple entry</option>
-              <option value="5 years">United Kingdom ETA - 5 years, Multiple entry</option>
             </select>
             {errors.visaType && (
               <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.visaType}</p>
@@ -168,6 +167,7 @@ export default function FirstStep({ formData, setFormData, setStep }) {
               type="date"
               name="arrivalDate"
               value={formData.arrivalDate || ''}
+              disabled={IdontHave}
               onChange={handleChange}
               style={{
                 fontFamily: 'inherit',
@@ -185,9 +185,9 @@ export default function FirstStep({ formData, setFormData, setStep }) {
           <div style={{ marginBottom: '20px' }}>
             <CheckBox
               name="acceptation"
-              checked={formData.acceptation || false}
-              onChange={handleChange}
-              label="I agree to the Terms and Conditions and Privacy Policy"
+              checked={IdontHave || false}
+              onChange={() => setIdontHave(!IdontHave)}
+              label="I don't have any travel dates planned."
             />
             {errors.acceptation && (
               <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{errors.acceptation}</p>

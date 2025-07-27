@@ -5,8 +5,11 @@ import ESTASummary from './../components/EstaSummary/ESTASummary';
 import ProgressSteps from './../components/ProgressSteps/ProgressSteps';
 import { FaPerson } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa";
+import PassportDetails from "../components/PassportDetails/PassportDetails";
+import ReactFlagsSelect from "react-flags-select";
+import ProcessingOptions from "../components/ProcessingOptions/ProcessingOptions";
 
-export default function SecondStep({ formData, setFormData, setStep }) {
+export default function FourStep({ formData, setFormData, setStep }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
@@ -150,38 +153,16 @@ export default function SecondStep({ formData, setFormData, setStep }) {
       <div style={{display: 'flex', margin: 'auto', justifyContent: 'center', flexWrap: 'wrap', maxWidth: '1312px'}}>
         <div>
           <div className="content-layout">
-            <h2>Your personal details</h2>
-            <p style={{fontSize: '17px', fontWeight: '500'}}>These should match what's in your passport.</p>
+            <h2>Choose your processing time</h2>
             
             {formData.personalDetails.map((_, index) => (
               <div key={index} className="traveler-section" style={{ position: "relative" }}>
-                <PersonalDetails
-                  formData={formData}
-                  handleSelectChange={handleSelectChange}
-                  title={`Traveler #${index + 1}`}
-                  index={index}
-                />
+                    <ProcessingOptions/>
 
-                {index > 0 && (
-                  <button 
-                    type="button"
-                    onClick={() => handleRemoveTraveler(index)}
-                    className="removetraveler"
-                  >
-                    <span style={{ fontSize: "14px", marginRight: 8 }}>✕</span>
-                    Remove Traveler {index + 1}
-                  </button>
-                )}
               </div>
             ))}
 
-            <button 
-              type="button"
-              onClick={handleAddTraveler}
-              className="addtraveler"
-            >
-              + Add another Traveler
-            </button>
+
 
             {validationErrors.length > 0 && (
               <div style={{ 
@@ -245,7 +226,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
                 fontWeight: 'bold',
                 width: '100%'
               }} 
-              onClick={() => setStep(2)} 
+              onClick={() => setStep(4)} 
               disabled={loading} 
               className='submit-btn'
             >
@@ -256,7 +237,7 @@ export default function SecondStep({ formData, setFormData, setStep }) {
             <p style={{color: 'rgb(11 57 71)'}}><FaPerson/> We take strong measures to protect your information</p>
             <p style={{fontWeight: '500', margin: '0'}}>For more details see how we keep your data safe</p>
           </div>
-          <div onClick={() => setStep(0)} style={{marginTop: '30px', cursor: 'pointer', paddingLeft: '10px', color: 'rgb(57, 79, 225)'}}>
+          <div onClick={() => setStep(2)} style={{marginTop: '30px', cursor: 'pointer', paddingLeft: '10px', color: 'rgb(57, 79, 225)'}}>
             <FaArrowLeft style={{marginBottom: '-2px', marginRight: '5px'}}/> Previous
           </div>
         </div>

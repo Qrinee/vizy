@@ -40,7 +40,7 @@ export default function SelectDate({
           value={year}
           placeholder={'Year'}
           onChange={(e) => handleChange(day, month, e.target.value)}
-          options={[...Array(new Date().getFullYear() - 1899).keys()].map((i) => (1900 + i).toString())}
+          options={[...Array(new Date().getFullYear() - 1899).keys()].reverse().map((i) => (1900 + i).toString())}
         />
         {question && (
           <div className="question-container">

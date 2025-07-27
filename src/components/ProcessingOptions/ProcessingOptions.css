@@ -1,0 +1,36 @@
+.processing-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: auto;
+}
+
+.option {
+  border: 2px solid #d6e5ea;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border 0.3s, background-color 0.3s;
+}
+
+.option:hover {
+  border-color: #004f63;
+}
+
+.option.selected {
+  background-color: #f0faff;
+  border-color: #003f50;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 18px;
+  color: #003f50;
+}
+
+.label {
+  font-size: 14px;
+  color: #333;
+  margin-top: 4px;
+}
