@@ -152,7 +152,7 @@ export default function FiveStep({ formData, setFormData, setStep }) {
             <h2>Review your order</h2>
             <div className="traveler-section" style={{ position: "relative" }}>
                     <ExpectedTime/>
-                    <ETACard/>
+                    <ETACard travelers={formData}/>
                     <DenialProtection/>
                 
               </div>

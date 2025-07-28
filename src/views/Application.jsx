@@ -14,6 +14,7 @@ processingTime: 1,
     numberOfTravelers: "1",
     nationality: "",
     arrivalDate: "",
+    denialProtection: "no",
     passportDetails: [
       {
       nationality: "",

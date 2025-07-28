@@ -2,7 +2,7 @@ import React from 'react'
 import gb from '../../assets/GB.webp'
 import { FaUser } from 'react-icons/fa6'
 import './ETACard.css'
-export default function ETACard() {
+export default function ETACard({travelers}) {
   return (
     <div>
         <div className='badge'>Standard Processing</div>
@@ -19,7 +19,16 @@ export default function ETACard() {
             <div className='divider'></div>
             <div>
                 <p className='txt'>Travelers:</p>
-                <FaUser style={{marginRight: '7px'}}/> Krystian Niemczyk
+                {
+                  travelers.personalDetails.map(e => {
+                    return(
+                    <div> 
+                      <FaUser style={{marginRight: '7px'}}/> {e.firstAndMiddleName} {e.lastName}
+                    </div>
+                    )
+                  })
+                }
+               
             </div>
         </div>
     </div>
