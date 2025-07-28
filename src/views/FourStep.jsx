@@ -59,15 +59,8 @@ export default function FourStep({ formData, setFormData, setStep }) {
         <div>
           <div className="content-layout">
             <h2>Choose your processing time</h2>
-            
-            {formData.personalDetails.map((_, index) => (
-              <div key={index} className="traveler-section" style={{ position: "relative" }}>
-                    <ProcessingOptions               selected={selected} 
+                                <ProcessingOptions               selected={selected} 
               setSelected={handleProcessingTimeChange}  />
-
-              </div>
-            ))}
-
 
 
             {validationErrors.length > 0 && (

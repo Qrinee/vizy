@@ -150,15 +150,13 @@ export default function FiveStep({ formData, setFormData, setStep }) {
         <div>
           <div className="content-layout">
             <h2>Review your order</h2>
-            
-            {formData.personalDetails.map((_, index) => (
-              <div key={index} className="traveler-section" style={{ position: "relative" }}>
+            <div className="traveler-section" style={{ position: "relative" }}>
                     <ExpectedTime/>
                     <ETACard/>
                     <DenialProtection/>
                 
               </div>
-            ))}
+
 
 
 
