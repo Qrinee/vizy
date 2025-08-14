@@ -13,7 +13,7 @@ const Footer = () => {
         </div>
         <div className="footer-info">
           <p className="copyright">
-            © {new Date().getFullYear()} Immigration Support ESTA division of GovGuide.co
+            © {new Date().getFullYear()} Immigration Support of GovGuide.co
           </p>
 
         </div>

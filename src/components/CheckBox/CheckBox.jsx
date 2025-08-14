@@ -1,14 +1,13 @@
 import React from 'react'
 import './checkbox.css'
 
-export default function CheckBox({ label, checked, onChange, name }) {
+export default function CheckBox({ checked, onChange, label }) {
   return (
     <label className="checkbox-container" style={{margin: 0}}>
       <input
-        name={name}
         type="checkbox"
         checked={checked}
-        onChange={onChange}
+        onChange={onChange} 
         className="hidden-checkbox"
       />
       <div className={`custom-checkbox ${checked ? 'checked' : ''}`}>

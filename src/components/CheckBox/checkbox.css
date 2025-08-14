@@ -7,6 +7,10 @@
     font-size: 16px;
   }
   
+  /* W pliku checkbox.css */
+.custom-checkbox {
+    pointer-events: none;
+}
   .hidden-checkbox {
     display: none;
   }
