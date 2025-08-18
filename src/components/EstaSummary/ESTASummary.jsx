@@ -6,7 +6,7 @@ const ESTASummary = ({total, traveler, price}) => {
     <div className="container">
       <div className="summary-box">
         <div className="row">
-          <span className="titled">United States ESTA</span>
+          <span className="titled">United Kingdom ETA</span>
           <span className="traveler">{traveler} Traveler</span>
         </div>
         <div className="row fee-row">
